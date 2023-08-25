@@ -26,10 +26,12 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         SavedRequest savedRequest = requestCache.getRequest(request, response);
         setDefaultTargetUrl("/");
         if (savedRequest != null) {
-            // 인증이 필요한 자원에 접근을 시도해서 로그인을 하는 경우
-            // 로그인이 성공하면 시도했던 자원으로 리다이렉트
-            String targetUrl = savedRequest.getRedirectUrl();
-            redirectStrategy.sendRedirect(request, response, targetUrl);
+            if (savedRequest.getRedirectUrl().equals("http://localhost:8080/user/loginForm")){
+                redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());
+            } else {
+                String targetUrl = savedRequest.getRedirectUrl();
+                redirectStrategy.sendRedirect(request, response, targetUrl);
+            }
         } else {
             // 로그인을 클릭해서 로그인 하는 경우
             redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());

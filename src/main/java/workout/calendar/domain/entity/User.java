@@ -11,10 +11,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User extends BaseEntity{
+public class User extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false, length = 200, unique = true)
@@ -29,7 +30,7 @@ public class User extends BaseEntity{
     @Column(length = 50)
     private String email;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 12)
     @Enumerated(EnumType.STRING)
     private RoleType role;
 

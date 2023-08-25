@@ -16,17 +16,8 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        String errorMessage = "";
 
-        if (exception instanceof BadCredentialsException){
-            errorMessage = "Invalid Username or Password";
-        } else if (exception instanceof InsufficientAuthenticationException) {
-            errorMessage = "Invalid Secret Key";
-        } else {
-            errorMessage = "Error";
-        }
-
-        setDefaultFailureUrl("/login?error=true&exception="+errorMessage);
+        setDefaultFailureUrl("/loginForm?error=true");
 
         super.onAuthenticationFailure(request, response, exception);
     }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+
+<head th:fragment="adminHead">
+  <script src="/js/bootstrap.js"></script>
+  <script src="/js/bootstrap.bundle.js"></script>
+  <script src="/js/jquery.js"></script>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+  <link rel="stylesheet" href="/css/css.css" />
+  <link rel="stylesheet" href="/css/base.css" />
+
+  <script type="text/javascript">
+
+            function searchInfo(){
+              var cat = $("select[name='cat']").val();
+              var info = $("input[name='info']").val();
+
+              if(info==""){
+                alert("검색할 내용을 입력해주세요")
+              } else {
+                location.href = "/admin/accounts?cat=" + cat + "&info=" + info;
+              }
+
+        }
+        </script>
+</head>
+
+</html>

@@ -1,4 +1,4 @@
-/*
+package workout.calendar.security.metadatasource;/*
 package workout.calendar.security.metadatasource;
 
 import org.springframework.security.access.ConfigAttribute;

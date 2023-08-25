@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import workout.calendar.domain.dto.FormLoginUserDto;
+import workout.calendar.domain.dto.userRoleDto;
 import workout.calendar.domain.entity.User;
 import workout.calendar.repository.UserRepository;
 import workout.calendar.service.UserService;
@@ -31,10 +32,16 @@ public class UserServiceImpl implements UserService {
         return user.getId();
     }
 
+    @Override
+    public List<userRoleDto> getUsers(String username) {
+        return null;
+    }
+
+
     private void validateDuplicateMember(String username) {
         User findUsers = userRepository.findByUsername(username);
         System.out.println("findUsers = " + findUsers);
-        if (findUsers == null) {
+        if (findUsers != null) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }

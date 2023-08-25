@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import workout.calendar.domain.auth.PrincipalDetails;
 import workout.calendar.domain.dto.FormLoginUserDto;
 import workout.calendar.domain.entity.User;
 import workout.calendar.service.UserService;
@@ -45,7 +47,10 @@ public class UserController {
     }
 
     @GetMapping("/loginForm")
-    public String loginForm(){
+    public String loginForm(@RequestParam(value = "error", required = false) String error,
+                            Model model){
+        model.addAttribute("error", error);
+        System.out.println("error = " + error);
         return "user/loginForm";
     }
 
@@ -71,6 +76,15 @@ public class UserController {
         }
         userService.register(formLoginUserDto);
         return "redirect:user/loginForm";
+    }
+
+    @GetMapping("/denied")
+    public String accessDenied(@RequestParam(value = "exception", required = false) String exception, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        model.addAttribute("username", principalDetails.getUsername());
+        model.addAttribute("exception", exception);
+        return "denied";
     }
 
 }

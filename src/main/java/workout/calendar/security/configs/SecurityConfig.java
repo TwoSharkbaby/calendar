@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import workout.calendar.security.handler.CustomAccessDeniedHandler;
+import workout.calendar.security.handler.CustomAuthenticationFailureHandler;
+import workout.calendar.security.handler.CustomAuthenticationSuccessHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,43 +21,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final PasswordEncoder encoder;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        List<UserDetails> user = new ArrayList<>();
-        UserDetails user1 = User.builder()
-                .username("user")
-                .password(encoder.encode("1111"))
-                .roles("USER").build();
-        UserDetails user2 = User.builder()
-                .username("manager")
-                .password(encoder.encode("1111"))
-                .roles("MANAGER").build();
-        UserDetails user3 = User.builder()
-                .username("admin")
-                .password(encoder.encode("1111"))
-                .roles("ADMIN").build();
-        user.add(user1);
-        user.add(user2);
-        user.add(user3);
-        return new InMemoryUserDetailsManager(user);
-    }
+    private final PasswordEncoder encoder;
 
     @Bean
     public SecurityFilterChain formSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .antMatchers("/", "/register", "/denied").permitAll()
+                        .antMatchers("/", "/register", "/denied", "/loginForm*").permitAll()
                         .antMatchers("/try/user").hasRole("USER")
                         .antMatchers("/try/manager").hasRole("MANAGER")
                         .antMatchers("/try/admin").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+//                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
+                .exceptionHandling()
+                .accessDeniedHandler(customAccessDeniedHandler)
+                .and()
                 .formLogin()
                 .loginPage("/loginForm")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", true)
+                .successHandler(customAuthenticationSuccessHandler)
+                .failureHandler(customAuthenticationFailureHandler)
                 .permitAll();
         return http.build();
     }

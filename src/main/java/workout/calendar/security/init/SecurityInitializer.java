@@ -1,4 +1,4 @@
-/*
+package workout.calendar.security.init;/*
 package workout.calendar.security.init;
 
 import lombok.RequiredArgsConstructor;
