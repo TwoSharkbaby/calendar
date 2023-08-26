@@ -1,16 +1,16 @@
 package workout.calendar.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import workout.calendar.domain.dto.FormLoginUserDto;
-import workout.calendar.domain.dto.userRoleDto;
+import workout.calendar.domain.dto.UserRoleDto;
 import workout.calendar.domain.entity.User;
 import workout.calendar.repository.UserRepository;
 import workout.calendar.service.UserService;
-
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -33,8 +33,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<userRoleDto> getUsers(String username) {
-        return null;
+    public Page<UserRoleDto> getUsers(String cat, String info, Pageable pageable) {
+        if (cat.equals("username")){
+            return userRepository.findRoleByUsernameLike(info, pageable)
+                    .map(UserRoleDto::new);
+        } else {
+            return userRepository.findRoleByNicknameLike(info, pageable)
+                    .map(UserRoleDto::new);
+        }
     }
 
 

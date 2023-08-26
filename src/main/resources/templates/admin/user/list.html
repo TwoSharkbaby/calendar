@@ -4,7 +4,7 @@
 <div th:replace="admin/common/top::header"></div>
 <div id="maininner"><!-- maininner (s)-->
     <div class="cc-tab-con">
-        <a th:href="@{/admin/accounts}" class="cc-tab-item on">사용자관리</a>		<!--// on : 현재 위치 //-->
+        <a th:href="@{/admin/accounts}" class="cc-tab-item on">사용자관리</a>        <!--// on : 현재 위치 //-->
         <a th:href="@{/admin/roles}" class="cc-tab-item">권한관리</a>
         <a th:href="@{/admin/resources}" class="cc-tab-item">리소스관리</a>
     </div>
@@ -19,22 +19,53 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="link_btn hover" th:each="account : ${accounts}">
+            <tr class="link_btn hover" th:each="users : ${users}">
 
                 <td style="text-align: left;">
-                    <a th:href="@{'/admin/accounts/' + ${account.id}}"><span th:text="${account.username}">회원</span></a>
+                    <a th:href="@{'/admin/accounts/' + ${users.id}}"><span th:text="${users.username}">회원</span></a>
                 </td>
-                <td style="text-align: left;" th:text="${account.email}"></td>
-                <td style="text-align: left;" th:text="${account.age}"></td>
-                <td style="text-align: left;">
-							<span th:each="role,iter : ${account.userRoles}">
-								<h6 th:text="${role.roleName}"></h6>
-							</span>
-                </td>
+                <td style="text-align: left;" th:text="${users.nickname}"></td>
+                <td style="text-align: left;" th:text="${users.role}"></td>
             </tr>
             </tbody>
         </table>
-        <div th:if="${info == null}" class="mt-5 mb-5">
+
+        <div th:if="${users != null}">
+
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/?page=1}" aria-label="Previous">
+                            <span aria-hidden="true">처음</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/?page={page} (page = ${pagination.prevBlock})}" aria-label="Previous">
+                            <span aria-hidden="true">이전</span>
+                        </a>
+                    </li>
+                    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+                        <li class="page-item"
+                            th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+                            th:each="pageButton : ${#numbers.sequence(start, end)}">
+                            <a class="page-link" th:href="@{/?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+                        </li>
+                    </th:block>
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{?page={page} (page = ${pagination.nextBlock})}" aria-label="Next">
+                            <span aria-hidden="true">다음</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{?page={page} (page = ${pagination.totalPageCnt})}" aria-label="Previous">
+                            <span aria-hidden="true">끝</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div th:if="${users == null}" class="mt-5 mb-5">
             <h1>사용자 관리 페이지 입니다</h1>
         </div>
         <div class="input-group mb-3">
@@ -42,7 +73,8 @@
                 <option value="username" selected>아이디</option>
                 <option value="nickname">닉네임</option>
             </select>
-            <input name="info" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <input name="info" type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                   aria-describedby="search-addon"/>
             <button type="button" class="btn btn-outline-primary" onclick="searchInfo()">search</button>
         </div>
     </div>

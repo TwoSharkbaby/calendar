@@ -1,22 +1,16 @@
 package workout.calendar.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import workout.calendar.domain.dto.ResourcesDto;
-import workout.calendar.domain.dto.userRoleDto;
-import workout.calendar.domain.entity.Resources;
+import workout.calendar.domain.dto.UserRoleDto;
 import workout.calendar.service.UserService;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Controller
@@ -32,6 +26,52 @@ public class AdminController {
     public String home() throws Exception {
         return "admin/home";
     }
+
+    @GetMapping(value = "/admin/accounts")
+    public String getUsers(@RequestParam(value = "cat", required = false) String cat,
+                           @RequestParam(value = "info", required = false) String info,
+                           @PageableDefault(size = 10, sort = "id",
+                                   direction = Sort.Direction.DESC) Pageable pageable,
+                           Model model) throws Exception {
+        if (cat != null) {
+            Page<UserRoleDto> users = userService.getUsers(cat, info, pageable);
+            int blockLimit = 3;
+            int startPage = (((int) Math.ceil(((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+            int endPage = Math.min((startPage + blockLimit - 1), users.getTotalPages());
+            model.addAttribute("users", users);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+        }
+        return "admin/user/list";
+    }
+
+//    @PostMapping(value="/admin/accounts")
+//    public String modifyUser(AccountDto accountDto) throws Exception {
+//
+//        userService.modifyUser(accountDto);
+//
+//        return "redirect:/admin/accounts";
+//    }
+//
+//    @GetMapping(value = "/admin/accounts/{id}")
+//    public String getUser(@PathVariable(value = "id") Long id, Model model) {
+//
+//        AccountDto accountDto = userService.getUser(id);
+//        List<Role> roleList = roleService.getRoles();
+//
+//        model.addAttribute("account", accountDto);
+//        model.addAttribute("roleList", roleList);
+//
+//        return "admin/user/detail";
+//    }
+//
+//    @GetMapping(value = "/admin/accounts/delete/{id}")
+//    public String removeUser(@PathVariable(value = "id") Long id, Model model) {
+//
+//        userService.deleteUser(id);
+//
+//        return "redirect:/admin/users";
+//    }
 
 //    @GetMapping(value = "/admin/resources")
 //    public String getResources(Model model) throws Exception {
@@ -95,45 +135,5 @@ public class AdminController {
 //
 //        urlFilterInvocationSecurityMetadatsSource.reload();
 //        return "redirect:/admin/resources";
-//    }
-
-    @GetMapping(value = "/admin/accounts")
-    public String getUsers(@RequestParam(value = "cat", required = false) String cat,
-                           @RequestParam(value = "info", required = false) String info,
-                           Model model) throws Exception {
-        if (info != null) {
-//            Page<userRoleDto> users = userService.getUsers();
-            model.addAttribute("info", info);
-            return "admin/user/list";
-        }
-        return "admin/user/list";
-    }
-
-//    @PostMapping(value="/admin/accounts")
-//    public String modifyUser(AccountDto accountDto) throws Exception {
-//
-//        userService.modifyUser(accountDto);
-//
-//        return "redirect:/admin/accounts";
-//    }
-//
-//    @GetMapping(value = "/admin/accounts/{id}")
-//    public String getUser(@PathVariable(value = "id") Long id, Model model) {
-//
-//        AccountDto accountDto = userService.getUser(id);
-//        List<Role> roleList = roleService.getRoles();
-//
-//        model.addAttribute("account", accountDto);
-//        model.addAttribute("roleList", roleList);
-//
-//        return "admin/user/detail";
-//    }
-//
-//    @GetMapping(value = "/admin/accounts/delete/{id}")
-//    public String removeUser(@PathVariable(value = "id") Long id, Model model) {
-//
-//        userService.deleteUser(id);
-//
-//        return "redirect:/admin/users";
 //    }
 }

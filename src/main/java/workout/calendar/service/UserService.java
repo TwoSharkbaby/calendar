@@ -1,14 +1,14 @@
 package workout.calendar.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import workout.calendar.domain.dto.FormLoginUserDto;
-import workout.calendar.domain.dto.userRoleDto;
-
-import java.util.List;
+import workout.calendar.domain.dto.UserRoleDto;
 
 public interface UserService {
 
     Long register(FormLoginUserDto formLoginUserDto);
 
-    List<userRoleDto> getUsers(String username);
+    Page<UserRoleDto> getUsers(String cat, String info, Pageable pageable);
 
 }
