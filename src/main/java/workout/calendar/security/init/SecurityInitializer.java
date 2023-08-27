@@ -1,4 +1,3 @@
-package workout.calendar.security.init;/*
 package workout.calendar.security.init;
 
 import lombok.RequiredArgsConstructor;
@@ -21,4 +20,4 @@ public class SecurityInitializer implements ApplicationRunner {
         roleHierarchy.setHierarchy(allHierarchy);
     }
 }
-*/
+

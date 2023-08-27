@@ -12,6 +12,8 @@ import workout.calendar.domain.entity.User;
 import workout.calendar.repository.UserRepository;
 import workout.calendar.service.UserService;
 
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -35,12 +37,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserRoleDto> getUsers(String cat, String info, Pageable pageable) {
         if (cat.equals("username")){
-            return userRepository.findRoleByUsernameLike(info, pageable)
+            return userRepository.findRoleByUsernameContains(info, pageable)
                     .map(UserRoleDto::new);
         } else {
-            return userRepository.findRoleByNicknameLike(info, pageable)
+            return userRepository.findRoleByNicknameContains(info, pageable)
                     .map(UserRoleDto::new);
         }
+    }
+
+    @Override
+    public UserRoleDto getUser(Long id) {
+        UserRoleDto userRoleDto = new UserRoleDto();
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()){
+            return userRoleDto;
+        } else {
+            return user.map(UserRoleDto::new).get();
+        }
+    }
+
+    @Override
+    @Transactional
+    public Long modifyRole(UserRoleDto userRoleDto) {
+        User user = userRepository.findById(userRoleDto.getId()).orElseThrow(IllegalArgumentException::new);
+        user.changeRole(userRoleDto.getRole());
+        return user.getId();
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 
 

@@ -47,4 +47,8 @@ public class User extends BaseTimeEntity{
         this.email = formLoginUserDto.getEmail();
         this.role = RoleType.ROLE_USER;
     }
+
+    public void changeRole(RoleType role){
+        this.role = role;
+    }
 }

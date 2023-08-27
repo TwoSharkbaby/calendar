@@ -4,65 +4,62 @@
 <div th:replace="admin/common/top::header"></div>
 <div id="maininner"><!-- maininner (s)-->
     <div class="cc-tab-con">
-        <a th:href="@{/admin/accounts}" class="cc-tab-item on">사용자관리</a>        <!--// on : 현재 위치 //-->
-        <a th:href="@{/admin/roles}" class="cc-tab-item">권한관리</a>
-        <a th:href="@{/admin/resources}" class="cc-tab-item">리소스관리</a>
+        <a th:href="@{/admin/accounts}" class="cc-tab-item on">사용자 권한 관리</a>        <!--// on : 현재 위치 //-->
+        <a th:href="@{/admin/resources}" class="cc-tab-item">리소스 관리</a>
     </div>
     <div class="tbl_wrp">
         <table class="table">
             <thead>
             <tr class="table-info">
-                <th scope="col">이름</th>
-                <th scope="col">이메일</th>
-                <th scope="col">나이</th>
+                <th scope="col">아이디</th>
+                <th scope="col">닉네임</th>
                 <th scope="col">권한</th>
+                <th scope="col">수정하기</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="link_btn hover" th:each="users : ${users}">
-
-                <td style="text-align: left;">
-                    <a th:href="@{'/admin/accounts/' + ${users.id}}"><span th:text="${users.username}">회원</span></a>
-                </td>
-                <td style="text-align: left;" th:text="${users.nickname}"></td>
-                <td style="text-align: left;" th:text="${users.role}"></td>
+            <tr class="link_btn hover" th:each="user : ${users}">
+                <td style="text-align: left;" th:text="${user.username}"></td>
+                <td style="text-align: left;" th:text="${user.nickname}"></td>
+                <td style="text-align: left;" th:text="${user.role}"></td>
+                <td><a th:href="@{'/admin/accounts/' + ${user.id}}"><button class="btn btn-primary">수정하기</button></a></td>
             </tr>
             </tbody>
         </table>
 
-        <div th:if="${users != null}">
+        <div th:if="${users != null && !users.empty}">
 
-            <nav aria-label="Page navigation example ">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" th:href="@{/?page=1}" aria-label="Previous">
-                            <span aria-hidden="true">처음</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" th:href="@{/?page={page} (page = ${pagination.prevBlock})}" aria-label="Previous">
-                            <span aria-hidden="true">이전</span>
-                        </a>
-                    </li>
-                    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
-                        <li class="page-item"
-                            th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
-                            th:each="pageButton : ${#numbers.sequence(start, end)}">
-                            <a class="page-link" th:href="@{/?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
-                        </li>
-                    </th:block>
-                    <li class="page-item">
-                        <a class="page-link" th:href="@{?page={page} (page = ${pagination.nextBlock})}" aria-label="Next">
-                            <span aria-hidden="true">다음</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" th:href="@{?page={page} (page = ${pagination.totalPageCnt})}" aria-label="Previous">
-                            <span aria-hidden="true">끝</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <ul class="pagination justify-content-center"
+                th:with="
+            pageNumber = ${users.pageable.pageNumber},
+            pageSize = ${users.pageable.pageSize},
+            totalPages = ${users.totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
+
+                <li th:classappend="${users.first} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${users.first} ? '#' : @{/admin/accounts(cat=${param.cat}, info=${param.info}, page=${pageNumber - 1})}">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+
+                <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                    th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+                    <a th:text="${page}" class="page-link" th:href="@{/admin/accounts(cat=${param.cat}, info=${param.info}, page=${page - 1})}"></a>
+                </li>
+
+                <li th:classappend="${users.last} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${users.last} ? '#' : @{/admin/accounts(cat=${param.cat}, info=${param.info}, page=${pageNumber + 1})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div th:if="${users != null && users.empty}">
+            <h1>해당 사용자를 찾을 수 없습니다</h1>
         </div>
 
         <div th:if="${users == null}" class="mt-5 mb-5">
@@ -79,6 +76,15 @@
         </div>
     </div>
 </div>
-
+<script th:inline="javascript">
+/*<![CDATA[*/
+   var result = /*[[${result}]]*/ null;
+   $(document).ready(function() {
+      if (result !== null) {
+         alert("해당 계정이 삭제 되었습니다");
+      }
+   });
+/*]]>*/
+</script>
 </body>
 </html>

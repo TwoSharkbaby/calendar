@@ -1,44 +1,80 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="admin/common/head :: adminHead"></head>
 <body>
-<script type="text/javascript">
-	$(document).ready(function(){
-	});
-
-	</script>
 <div th:replace="admin/common/top::header"></div>
 <div id="maininner"><!-- maininner (s)-->
   <div class="cc-tab-con">
-    <a href="javascript:tabChange('1');" class="cc-tab-item">사용자관리</a>		<!--// on : 현재 위치 //-->
-    <a href="javascript:tabChange('2');" class="cc-tab-item">권한관리</a>
-    <a href="javascript:void(0);" class="cc-tab-item on">리소스관리</a>
+    <a th:href="@{/admin/accounts}" class="cc-tab-item">사용자 권한 관리</a>        <!--// on : 현재 위치 //-->
+    <a th:href="@{/admin/resources}" class="cc-tab-item on">리소스 관리</a>
   </div>
   <div class="tbl_wrp">
     <table class="table">
       <thead>
       <tr class="table-info">
+        <th scope="col">번호</th>
         <th scope="col">리소스명</th>
-        <th scope="col">리소스타입</th>
-        <th scope="col">HttpMethod</th>
-        <th scope="col">순서</th>
+        <th scope="col">권한</th>
+        <th scope="col">수정하기</th>
       </tr>
       </thead>
       <tbody>
       <tr class="link_btn hover" th:each="resource : ${resources}">
-
-        <td style="text-align: left;">
-          <a th:href="@{'/admin/resources/' + ${resource.id}}"><span th:text="${resource.resourceName}">회원</span></a>
-        </td>
-        <td style="text-align: left;" th:text="${resource.resourceType}"></td>
-        <td style="text-align: left;" th:text="${resource.httpMethod}"></td>
-        <td style="text-align: left;" th:text="${resource.orderNum}"></td>
+        <td style="text-align: left;" th:text="${resource.id}"></td>
+        <td style="text-align: left;" th:text="${resource.urlName}"></td>
+        <td style="text-align: left;" th:text="${resource.role}"></td>
+        <td><a th:href="@{'/admin/accounts/' + ${resource.id}}"><button class="btn btn-primary">수정하기</button></a></td>
       </tr>
       </tbody>
     </table>
+
+    <div th:if="${resources != null}">
+
+      <ul class="pagination justify-content-center"
+          th:with="
+            pageNumber = ${resources.pageable.pageNumber},
+            pageSize = ${resources.pageable.pageSize},
+            totalPages = ${resources.totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
+
+        <li th:classappend="${resources.first} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="${resources.first} ? '#' : @{/admin/resources(page=${pageNumber - 1})}">
+            <span aria-hidden="true">&lt;</span>
+          </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+            th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+          <a th:text="${page}" class="page-link" th:href="@{/admin/resources(page=${page - 1})}"></a>
+        </li>
+
+        <li th:classappend="${resources.last} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="${resources.last} ? '#' : @{/admin/resources(page=${pageNumber + 1})}"
+             aria-label="Next">
+            <span aria-hidden="true">&gt;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div th:if="${resource == null}" class="mt-5 mb-5">
+      <h1>리소스 관리 페이지 입니다</h1>
+    </div>
     <div style="text-align:right;">
       <p><a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/resources/register}">리소드 등록</a></p>
     </div>
   </div>
 </div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+   var result = /*[[${result}]]*/ null;
+   $(document).ready(function() {
+      if (result !== null) {
+         alert("해당 접근 권한이 삭제 되었습니다");
+      }
+   });
+/*]]>*/
+</script>
 </body>
 </html>

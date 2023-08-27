@@ -1,4 +1,3 @@
-package workout.calendar.security.factory;/*
 package workout.calendar.security.factory;
 
 import lombok.RequiredArgsConstructor;
@@ -6,6 +5,7 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
+import workout.calendar.service.SecurityResourceService;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -38,4 +38,4 @@ public class UrlResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<Req
     public boolean isSingleton() {
         return true;
     }
-}*/
+}

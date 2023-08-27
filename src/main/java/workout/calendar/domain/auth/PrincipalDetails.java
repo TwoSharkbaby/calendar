@@ -18,6 +18,10 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public PrincipalDetails(User user, Map<String, Object> attributes) {
         this.user = user;
         this.attributes = attributes;
