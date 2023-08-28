@@ -7,6 +7,9 @@ import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleHierarchyVoter;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -19,7 +22,7 @@ import workout.calendar.security.handler.CustomAuthenticationFailureHandler;
 import workout.calendar.security.handler.CustomAuthenticationSuccessHandler;
 import workout.calendar.security.metadatasource.UrlFilterInvocationSecurityMetadatsSource;
 import workout.calendar.security.provider.CustomAuthenticationProvider;
-import workout.calendar.service.SecurityResourceService;
+import workout.calendar.security.service.SecurityResourceService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ public class SecurityConfig {
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
+    private final AuthenticationConfiguration authenticationConfiguration;
     private final CustomAuthenticationProvider customAuthenticationProvider;
     private final UrlResourcesMapFactoryBean urlResourcesMapFactoryBean;
     private final SecurityResourceService securityResourceService;
@@ -66,10 +70,17 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        ProviderManager authenticationManager = (ProviderManager) authenticationConfiguration.getAuthenticationManager();
+        return authenticationManager;
+    }
+
+    @Bean
     public FilterSecurityInterceptor filterSecurityInterceptor() throws Exception {
         FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
         filterSecurityInterceptor.setSecurityMetadataSource(urlFilterInvocationSecurityMetadatsSource());
         filterSecurityInterceptor.setAccessDecisionManager(affirmativeBased());
+        filterSecurityInterceptor.setAuthenticationManager(authenticationManager(authenticationConfiguration));
         return filterSecurityInterceptor;
     }
 

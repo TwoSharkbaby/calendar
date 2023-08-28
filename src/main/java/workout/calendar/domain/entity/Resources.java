@@ -3,6 +3,7 @@ package workout.calendar.domain.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import workout.calendar.domain.RoleType;
+import workout.calendar.domain.dto.ResourcesDto;
 
 import javax.persistence.*;
 
@@ -21,5 +22,10 @@ public class Resources extends BaseEntity {
     @Column(nullable = false, length = 12)
     @Enumerated(EnumType.STRING)
     private RoleType role;
+
+    public void setResources(ResourcesDto resourcesDto){
+        this.urlName = resourcesDto.getUrlName();
+        this.role = resourcesDto.getRole();
+    }
 
 }

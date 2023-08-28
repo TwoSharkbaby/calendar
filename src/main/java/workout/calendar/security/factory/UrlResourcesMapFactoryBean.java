@@ -5,7 +5,7 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
-import workout.calendar.service.SecurityResourceService;
+import workout.calendar.security.service.SecurityResourceService;
 
 import java.util.LinkedHashMap;
 import java.util.List;

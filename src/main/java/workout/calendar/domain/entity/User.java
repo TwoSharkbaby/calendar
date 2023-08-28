@@ -1,10 +1,10 @@
 package workout.calendar.domain.entity;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import workout.calendar.domain.RoleType;
-import workout.calendar.domain.dto.FormLoginUserDto;
+import workout.calendar.domain.dto.UserModifyFormDto;
+import workout.calendar.domain.dto.UserResisterFormDto;
 
 import javax.persistence.*;
 
@@ -40,15 +40,21 @@ public class User extends BaseTimeEntity{
     @Column(length = 100)
     private String providerId;
 
-    public void setUser(FormLoginUserDto formLoginUserDto) {
-        this.username = formLoginUserDto.getUsername();
-        this.password = formLoginUserDto.getPassword();
-        this.nickname = formLoginUserDto.getNickname();
-        this.email = formLoginUserDto.getEmail();
+    public void setUser(UserResisterFormDto userResisterFormDto) {
+        this.username = userResisterFormDto.getUsername();
+        this.password = userResisterFormDto.getPassword();
+        this.nickname = userResisterFormDto.getNickname();
+        this.email = userResisterFormDto.getEmail();
         this.role = RoleType.ROLE_USER;
     }
 
     public void changeRole(RoleType role){
         this.role = role;
+    }
+
+    public void changeInfo(UserModifyFormDto userModifyFormDto) {
+        this.password = userModifyFormDto.getPassword();
+        this.nickname = userModifyFormDto.getNickname();
+        this.email = userModifyFormDto.getEmail();
     }
 }

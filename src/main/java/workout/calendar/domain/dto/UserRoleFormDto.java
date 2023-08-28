@@ -9,14 +9,14 @@ import workout.calendar.domain.entity.User;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserRoleDto {
+public class UserRoleFormDto {
 
     private Long id;
     private String username;
     private String nickname;
     private RoleType role;
 
-    public UserRoleDto(User user) {
+    public UserRoleFormDto(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.nickname = user.getNickname();

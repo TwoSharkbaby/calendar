@@ -1,8 +1,6 @@
-package workout.calendar.service;
+package workout.calendar.security.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -27,7 +25,7 @@ public class SecurityResourceService {
         resourcesList.forEach(resources -> {
             List<ConfigAttribute> configAttributeList = new ArrayList<>();
             configAttributeList.add(new SecurityConfig(resources.getRole().name()));
-            result.put(new AntPathRequestMatcher(resources.getRole().name()), configAttributeList);
+            result.put(new AntPathRequestMatcher(resources.getUrlName()), configAttributeList);
         });
         return result;
     }

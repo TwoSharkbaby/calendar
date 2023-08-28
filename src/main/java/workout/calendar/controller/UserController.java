@@ -8,11 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import workout.calendar.domain.auth.PrincipalDetails;
-import workout.calendar.domain.dto.FormLoginUserDto;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import workout.calendar.domain.dto.UserModifyFormDto;
+import workout.calendar.domain.dto.UserResisterFormDto;
 import workout.calendar.domain.entity.User;
 import workout.calendar.service.UserService;
 
@@ -26,65 +27,74 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/")
-    public String home(){
-        return "home";
+    @GetMapping("/register")
+    public String registerForm(Model model) throws Exception {
+        model.addAttribute("userResisterFormDto", new UserResisterFormDto());
+        return "user/register";
     }
 
-    @GetMapping("/try/user")
-    public String user(){
-        return "user";
+    @PostMapping("/register")
+    public String register(@Valid UserResisterFormDto userResisterFormDto, BindingResult result, RedirectAttributes rtts, Model model) {
+        if (result.hasErrors()) {
+            return "user/register";
+        } else {
+            Long id = userService.createUser(userResisterFormDto);
+            if (id == null) {
+                model.addAttribute("userResisterFormDto", userResisterFormDto);
+                model.addAttribute("result", "registerFalse");
+                return "user/register";
+            } else {
+                rtts.addFlashAttribute("result", "registerTrue");
+                return "redirect:/loginForm";
+            }
+        }
     }
 
-    @GetMapping("/try/manager")
-    public String manager(){
-        return "manager";
+    // 접속자랑 아이디 같은지 확인
+    @GetMapping("/modify/{id}")
+    public String modifyForm(@PathVariable Long id, Model model) throws Exception {
+        model.addAttribute("userModifyFormDto", userService.getUserModifyForm(id));
+        return "user/modify";
     }
 
-    @GetMapping("/try/admin")
-    public String admin(){
-        return "admin";
+    // 접속자랑 아이디 같은지 확인
+    @PostMapping("/modify")
+    public String modify(@Valid UserModifyFormDto userModifyFormDto, BindingResult result,
+                         RedirectAttributes rtts, Model model, HttpServletRequest request) {
+        if (result.hasErrors()) {
+            return "user/modify";
+        } else {
+            Long id = userService.modifyUser(userModifyFormDto);
+            if (id == null) {
+                model.addAttribute("userResisterFormDto", userModifyFormDto);
+                model.addAttribute("result", "modifyFalse");
+                return "user/modify";
+            } else {
+                rtts.addFlashAttribute("result", "modifyTrue");
+                new SecurityContextLogoutHandler().logout(request, null, null);
+                return "redirect:/loginForm";
+            }
+        }
     }
 
     @GetMapping("/loginForm")
     public String loginForm(@RequestParam(value = "error", required = false) String error,
-                            Model model){
+                            Model model) {
         model.addAttribute("error", error);
-        System.out.println("error = " + error);
         return "user/loginForm";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null){
+        if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
         return "redirect:/";
     }
 
-    @GetMapping("/register")
-    public String registerForm(Model model){
-        model.addAttribute("formLoginUserDto", new FormLoginUserDto());
-        return "user/register";
-    }
 
-    @PostMapping("/register")
-    public String register(@Valid FormLoginUserDto formLoginUserDto, BindingResult result){
-        if (result.hasErrors()){
-            return "user/register";
-        }
-        userService.register(formLoginUserDto);
-        return "redirect:user/loginForm";
-    }
 
-    @GetMapping("/denied")
-    public String accessDenied(@RequestParam(value = "exception", required = false) String exception, Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        model.addAttribute("username", principalDetails.getUsername());
-        model.addAttribute("exception", exception);
-        return "denied";
-    }
+
 
 }

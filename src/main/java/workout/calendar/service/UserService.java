@@ -2,19 +2,23 @@ package workout.calendar.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import workout.calendar.domain.dto.FormLoginUserDto;
-import workout.calendar.domain.dto.UserRoleDto;
-import workout.calendar.domain.entity.User;
+import workout.calendar.domain.dto.UserModifyFormDto;
+import workout.calendar.domain.dto.UserResisterFormDto;
+import workout.calendar.domain.dto.UserRoleFormDto;
 
 public interface UserService {
 
-    Long register(FormLoginUserDto formLoginUserDto);
+    Long createUser(UserResisterFormDto userResisterFormDto);
 
-    Page<UserRoleDto> getUsers(String cat, String info, Pageable pageable);
+    Page<UserRoleFormDto> getUsers(String cat, String info, Pageable pageable);
 
-    UserRoleDto getUser(Long id);
+    UserRoleFormDto getUserRoleForm(Long id);
 
-    Long modifyRole(UserRoleDto userRoleDto);
+    UserModifyFormDto getUserModifyForm(Long id);
+
+    Long modifyRole(UserRoleFormDto userRoleFormDto);
 
     void deleteUser(Long id);
+
+    Long modifyUser(UserModifyFormDto userModifyFormDto);
 }

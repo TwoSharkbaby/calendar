@@ -33,7 +33,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(principalDetails.getUser(), null, principalDetails.getAuthorities());
-        System.out.println("CustomAuthenticationProvider.authenticate");
         return authenticationToken;
     }
 

@@ -6,8 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import workout.calendar.domain.dto.FormLoginUserDto;
-import workout.calendar.domain.dto.UserRoleDto;
+import workout.calendar.domain.dto.UserModifyFormDto;
+import workout.calendar.domain.dto.UserResisterFormDto;
+import workout.calendar.domain.dto.UserRoleFormDto;
 import workout.calendar.domain.entity.User;
 import workout.calendar.repository.UserRepository;
 import workout.calendar.service.UserService;
@@ -22,45 +23,58 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
-
     @Transactional
     @Override
-    public Long register(FormLoginUserDto formLoginUserDto) {
-        validateDuplicateMember(formLoginUserDto.getUsername());
-        formLoginUserDto.setPassword(encoder.encode(formLoginUserDto.getPassword()));
-        User user = new User();
-        user.setUser(formLoginUserDto);
-        userRepository.save(user);
-        return user.getId();
+    public Long createUser(UserResisterFormDto userResisterFormDto) {
+        if (userRepository.findByUsername(userResisterFormDto.getUsername()) != null) {
+            return null;
+        } else {
+            User user = new User();
+            userResisterFormDto.setPassword(encoder.encode(userResisterFormDto.getPassword()));
+            user.setUser(userResisterFormDto);
+            userRepository.save(user);
+            return user.getId();
+        }
     }
 
     @Override
-    public Page<UserRoleDto> getUsers(String cat, String info, Pageable pageable) {
-        if (cat.equals("username")){
+    public Page<UserRoleFormDto> getUsers(String cat, String info, Pageable pageable) {
+        if (cat.equals("username")) {
             return userRepository.findRoleByUsernameContains(info, pageable)
-                    .map(UserRoleDto::new);
+                    .map(UserRoleFormDto::new);
         } else {
             return userRepository.findRoleByNicknameContains(info, pageable)
-                    .map(UserRoleDto::new);
+                    .map(UserRoleFormDto::new);
         }
     }
 
     @Override
-    public UserRoleDto getUser(Long id) {
-        UserRoleDto userRoleDto = new UserRoleDto();
+    public UserRoleFormDto getUserRoleForm(Long id) {
+        UserRoleFormDto userRoleFormDto = new UserRoleFormDto();
         Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()){
-            return userRoleDto;
+        if (user.isEmpty()) {
+            return userRoleFormDto;
         } else {
-            return user.map(UserRoleDto::new).get();
+            return user.map(UserRoleFormDto::new).get();
+        }
+    }
+
+    @Override
+    public UserModifyFormDto getUserModifyForm(Long id) {
+        UserModifyFormDto userModifyFormDto = new UserModifyFormDto();
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            return userModifyFormDto;
+        } else {
+            return user.map(UserModifyFormDto::new).get();
         }
     }
 
     @Override
     @Transactional
-    public Long modifyRole(UserRoleDto userRoleDto) {
-        User user = userRepository.findById(userRoleDto.getId()).orElseThrow(IllegalArgumentException::new);
-        user.changeRole(userRoleDto.getRole());
+    public Long modifyRole(UserRoleFormDto userRoleFormDto) {
+        User user = userRepository.findById(userRoleFormDto.getId()).orElseThrow(IllegalArgumentException::new);
+        user.changeRole(userRoleFormDto.getRole());
         return user.getId();
     }
 
@@ -70,12 +84,13 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-
-    private void validateDuplicateMember(String username) {
-        User findUsers = userRepository.findByUsername(username);
-        System.out.println("findUsers = " + findUsers);
-        if (findUsers != null) {
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
-        }
+    @Override
+    @Transactional
+    public Long modifyUser(UserModifyFormDto userModifyFormDto) {
+        User user = userRepository.findById(userModifyFormDto.getId()).orElseThrow(IllegalArgumentException::new);
+        userModifyFormDto.setPassword(encoder.encode(userModifyFormDto.getPassword()));
+        user.changeInfo(userModifyFormDto);
+        return user.getId();
     }
+
 }

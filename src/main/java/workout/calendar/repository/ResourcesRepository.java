@@ -5,6 +5,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import workout.calendar.domain.entity.Resources;
 
+import java.util.List;
+
 public interface ResourcesRepository extends JpaRepository<Resources, Long> {
     Page<Resources> findAll(Pageable pageable);
+
+    Resources findByUrlName(String urlName);
 }

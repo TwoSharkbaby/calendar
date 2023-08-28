@@ -22,7 +22,7 @@
         <td style="text-align: left;" th:text="${resource.id}"></td>
         <td style="text-align: left;" th:text="${resource.urlName}"></td>
         <td style="text-align: left;" th:text="${resource.role}"></td>
-        <td><a th:href="@{'/admin/accounts/' + ${resource.id}}"><button class="btn btn-primary">수정하기</button></a></td>
+        <td><a th:href="@{'/admin/resources/' + ${resource.id}}"><button class="btn btn-primary">수정하기</button></a></td>
       </tr>
       </tbody>
     </table>
@@ -58,7 +58,7 @@
       </ul>
     </div>
 
-    <div th:if="${resource == null}" class="mt-5 mb-5">
+    <div th:if="${resources == null}" class="mt-5 mb-5">
       <h1>리소스 관리 페이지 입니다</h1>
     </div>
     <div style="text-align:right;">
@@ -70,8 +70,8 @@
 /*<![CDATA[*/
    var result = /*[[${result}]]*/ null;
    $(document).ready(function() {
-      if (result !== null) {
-         alert("해당 접근 권한이 삭제 되었습니다");
+      if (result == "deleteTrue") {
+         alert("리소스가 삭제 되었습니다");
       }
    });
 /*]]>*/

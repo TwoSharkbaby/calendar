@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head :: adminHead"></head>
+<body>
+<script type="text/javascript">
+  $(document).ready(function(){
+  });
+
+
+</script>
+<div th:replace="admin/common/top::header"></div>
+<div id="maininner"><!-- maininner (s)-->
+  <div class="cc-tab-con">
+    <a th:href="@{/admin/accounts}" class="cc-tab-item">사용자 권한 관리</a>        <!--// on : 현재 위치 //-->
+    <a th:href="@{/admin/resources}" class="cc-tab-item on">리소스 관리</a>
+  </div>
+  <div class="tbl_wrp">
+    <form class="form-horizontal" th:action="@{/admin/resources/register}" method="post" th:object="${resources}">
+      <input th:type="hidden" th:field="*{id}"/>
+      <div class="form-group">
+        <label for="urlName" class="col-sm-2 control-label">리소스명</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control input-large" th:field="*{urlName}" id="urlName"
+                 placeholder="리소스명">
+        </div>
+      </div>
+      <div class="form-group">
+        <select th:field="*{role}" id="role">
+          <option value="ROLE_USER" selected>일반</option>
+          <option value="ROLE_MANAGER">매니저</option>
+          <option value="ROLE_ADMIN">관리자</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-10">
+          <button type="Submit" class="btn btn-dark btn-lg">등록</button>
+          <a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{'/admin/resources/delete/' + *{id}}">삭제</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+   var result = /*[[${result}]]*/ null;
+   $(document).ready(function() {
+      if (result == "createTrue") {
+         alert("리소스가 등록 되었습니다");
+      }
+      if (result == "createFalse") {
+         alert("리소스가 등록이 실패하였습니다");
+      }
+   });
+/*]]>*/
+</script>
+</body>
+</html>

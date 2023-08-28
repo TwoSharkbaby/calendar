@@ -1,10 +1,8 @@
 package workout.calendar.domain.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import workout.calendar.domain.RoleType;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -13,7 +11,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FormLoginUserDto {
+public class UserResisterFormDto {
 
     @NotEmpty(message = "회원 이름은 필수 입니다")
     @Size(min = 5, max = 15, message = "회원 이름은 5글자 이상 15글자 이하만 가능합니다")
