@@ -2,32 +2,29 @@
 <head th:replace="admin/common/head :: adminHead"></head>
 <body>
 <div th:replace="admin/common/top::header"></div>
-<div id="maininner"><!-- maininner (s)-->
-    <div class="cc-tab-con">
-        <a th:href="@{/admin/accounts}" class="cc-tab-item on">사용자 권한 관리</a>        <!--// on : 현재 위치 //-->
-        <a th:href="@{/admin/resources}" class="cc-tab-item">리소스 관리</a>
-    </div>
+<div class="container" style="height:600px;">
     <div class="tbl_wrp">
-        <table class="table">
+        <table class="table text-center align-middle">
             <thead>
             <tr class="table-info">
-                <th scope="col">아이디</th>
-                <th scope="col">닉네임</th>
-                <th scope="col">권한</th>
-                <th scope="col">수정하기</th>
+                <th scope="col" style="width: 55%;">아이디</th>
+                <th scope="col" style="width: 15%;">닉네임</th>
+                <th scope="col" style="width: 15%;">권한</th>
+                <th scope="col" style="width: 15%;">수정하기</th>
             </tr>
             </thead>
             <tbody>
             <tr class="link_btn hover" th:each="user : ${users}">
-                <td style="text-align: left;" th:text="${user.username}"></td>
-                <td style="text-align: left;" th:text="${user.nickname}"></td>
-                <td style="text-align: left;" th:text="${user.role}"></td>
-                <td><a th:href="@{'/admin/accounts/' + ${user.id}}"><button class="btn btn-primary">수정하기</button></a></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.nickname}"></td>
+                <td th:text="${user.role}"></td>
+                <td><a th:href="@{'/admin/accounts/' + ${user.id}}">
+                    <button class="btn btn-primary">수정하기</button>
+                </a></td>
             </tr>
             </tbody>
         </table>
-
-        <div th:if="${users != null && !users.empty}">
+        <div th:if="${users != null && !users.empty}" class="mt-4 mb-2">
 
             <ul class="pagination justify-content-center"
                 th:with="
@@ -39,43 +36,50 @@
             endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
 
                 <li th:classappend="${users.first} ? 'disabled'" class="page-item">
-                    <a class="page-link" th:href="${users.first} ? '#' : @{/admin/accounts(cat=${param.cat}, info=${param.info}, page=${pageNumber - 1})}">
+                    <a class="page-link"
+                       th:href="${users.first} ? '#' : @{/admin/accounts(cat=${param.cat}, info=${param.info}, page=${pageNumber - 1})}">
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
 
                 <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
                     th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
-                    <a th:text="${page}" class="page-link" th:href="@{/admin/accounts(cat=${param.cat}, info=${param.info}, page=${page - 1})}"></a>
+                    <a th:text="${page}" class="page-link"
+                       th:href="@{/admin/accounts(cat=${param.cat}, info=${param.info}, page=${page - 1})}"></a>
                 </li>
 
                 <li th:classappend="${users.last} ? 'disabled'" class="page-item">
-                    <a class="page-link" th:href="${users.last} ? '#' : @{/admin/accounts(cat=${param.cat}, info=${param.info}, page=${pageNumber + 1})}"
+                    <a class="page-link"
+                       th:href="${users.last} ? '#' : @{/admin/accounts(cat=${param.cat}, info=${param.info}, page=${pageNumber + 1})}"
                        aria-label="Next">
                         <span aria-hidden="true">&gt;</span>
                     </a>
                 </li>
             </ul>
         </div>
-
-        <div th:if="${users != null && users.empty}">
+        <div th:if="${users != null && users.empty}" class="mt-5 mb-5 d-flex justify-content-center align-items-center text-center" style="height: 80%;">
             <h1>해당 사용자를 찾을 수 없습니다</h1>
         </div>
 
-        <div th:if="${users == null}" class="mt-5 mb-5">
+        <div th:if="${users == null}" class="mt-5 mb-5 d-flex justify-content-center align-items-center text-center" style="height: 80%;">
             <h1>아이디 또는 닉네임을 입력해주세요</h1>
         </div>
-        <div class="input-group mb-3">
-            <select name="cat">
+    </div>
+</div>
+<div class="container" style="height:100px;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="input-group mb-5 mt-2" style="width: 50%;">
+            <select name="cat" class="text-center">
                 <option value="username" selected>아이디</option>
                 <option value="nickname">닉네임</option>
             </select>
-            <input name="info" type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+            <input name="info" type="search" class="form-control" placeholder="Search" aria-label="Search"
                    aria-describedby="search-addon"/>
             <button type="button" class="btn btn-outline-primary" onclick="searchInfo()">search</button>
         </div>
     </div>
 </div>
+<div th:replace="layout/footer::footer"></div>
 <script th:inline="javascript">
 /*<![CDATA[*/
    var result = /*[[${result}]]*/ null;
@@ -85,6 +89,13 @@
       }
    });
 /*]]>*/
+
+
+
+
+
+
+
 </script>
 </body>
 </html>

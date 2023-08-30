@@ -7,10 +7,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import workout.calendar.domain.dto.UserModifyFormDto;
 import workout.calendar.domain.dto.UserResisterFormDto;
@@ -22,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -45,7 +43,7 @@ public class UserController {
                 return "user/register";
             } else {
                 rtts.addFlashAttribute("result", "registerTrue");
-                return "redirect:/loginForm";
+                return "redirect:/user/loginForm";
             }
         }
     }
@@ -72,7 +70,7 @@ public class UserController {
             } else {
                 rtts.addFlashAttribute("result", "modifyTrue");
                 new SecurityContextLogoutHandler().logout(request, null, null);
-                return "redirect:/loginForm";
+                return "redirect:/user/loginForm";
             }
         }
     }
@@ -85,11 +83,12 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response, RedirectAttributes rtts) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
+        rtts.addFlashAttribute("result", "logoutTrue");
         return "redirect:/";
     }
 

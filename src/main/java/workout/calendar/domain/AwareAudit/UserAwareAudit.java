@@ -3,6 +3,7 @@ package workout.calendar.domain.AwareAudit;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import workout.calendar.domain.auth.PrincipalDetails;
 import workout.calendar.domain.entity.User;
 
 
@@ -16,7 +17,7 @@ public class UserAwareAudit implements AuditorAware<String> {
         if (null == authentication || !authentication.isAuthenticated() || authentication.getPrincipal() == "anonymousUser") {
             return null;
         }
-        User user = (User) authentication.getPrincipal();
-        return Optional.of(user.getUsername());
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        return Optional.of(principalDetails.getUsername());
     }
 }

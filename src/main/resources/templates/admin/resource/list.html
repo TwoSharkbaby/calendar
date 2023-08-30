@@ -2,32 +2,28 @@
 <head th:replace="admin/common/head :: adminHead"></head>
 <body>
 <div th:replace="admin/common/top::header"></div>
-<div id="maininner"><!-- maininner (s)-->
-  <div class="cc-tab-con">
-    <a th:href="@{/admin/accounts}" class="cc-tab-item">사용자 권한 관리</a>        <!--// on : 현재 위치 //-->
-    <a th:href="@{/admin/resources}" class="cc-tab-item on">리소스 관리</a>
-  </div>
+<div class="container" style="height:600px;">
   <div class="tbl_wrp">
-    <table class="table">
+    <table class="table text-center align-middle">
       <thead>
       <tr class="table-info">
-        <th scope="col">번호</th>
-        <th scope="col">리소스명</th>
-        <th scope="col">권한</th>
-        <th scope="col">수정하기</th>
+        <th scope="col" style="width: 15%;">번호</th>
+        <th scope="col" style="width: 55%;">리소스명</th>
+        <th scope="col" style="width: 15%;">권한</th>
+        <th scope="col" style="width: 15%;">수정하기</th>
       </tr>
       </thead>
       <tbody>
       <tr class="link_btn hover" th:each="resource : ${resources}">
-        <td style="text-align: left;" th:text="${resource.id}"></td>
-        <td style="text-align: left;" th:text="${resource.urlName}"></td>
-        <td style="text-align: left;" th:text="${resource.role}"></td>
+        <td th:text="${resource.id}"></td>
+        <td th:text="${resource.urlName}"></td>
+        <td th:text="${resource.role}"></td>
         <td><a th:href="@{'/admin/resources/' + ${resource.id}}"><button class="btn btn-primary">수정하기</button></a></td>
       </tr>
       </tbody>
     </table>
 
-    <div th:if="${resources != null}">
+    <div th:if="${resources != null && !resources.empty}">
 
       <ul class="pagination justify-content-center"
           th:with="
@@ -57,15 +53,17 @@
         </li>
       </ul>
     </div>
-
-    <div th:if="${resources == null}" class="mt-5 mb-5">
-      <h1>리소스 관리 페이지 입니다</h1>
-    </div>
-    <div style="text-align:right;">
-      <p><a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{/admin/resources/register}">리소드 등록</a></p>
+    <div th:if="${resources.empty}" class="mt-5 mb-5 d-flex justify-content-center align-items-center text-center" style="height: 80%;">
+      <h1>등록된 리소스가 없습니다</h1>
     </div>
   </div>
 </div>
+<div class="container" style="height:100px;">
+  <div style="text-align:right;">
+    <p><a class="btn btn-dark btn-lg me-5" style="margin:10;" th:href="@{/admin/resources/register}">등록</a></p>
+  </div>
+</div>
+<div th:replace="layout/footer::footer"></div>
 <script th:inline="javascript">
 /*<![CDATA[*/
    var result = /*[[${result}]]*/ null;

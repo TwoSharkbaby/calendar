@@ -32,7 +32,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
 
         UsernamePasswordAuthenticationToken authenticationToken
-                = new UsernamePasswordAuthenticationToken(principalDetails.getUser(), null, principalDetails.getAuthorities());
+                = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
         return authenticationToken;
     }
 

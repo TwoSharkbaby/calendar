@@ -1,47 +1,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="admin/common/head :: adminHead"></head>
 <body>
-<script type="text/javascript">
-  $(document).ready(function(){
-  });
-
-
-</script>
 <div th:replace="admin/common/top::header"></div>
-<div id="maininner"><!-- maininner (s)-->
-    <div class="cc-tab-con">
-        <a th:href="@{/admin/accounts}" class="cc-tab-item">사용자 권한 관리</a>        <!--// on : 현재 위치 //-->
-        <a th:href="@{/admin/resources}" class="cc-tab-item on">리소스 관리</a>
-    </div>
+<div class="container" style="height:700px;">
     <div class="tbl_wrp">
         <form class="form-horizontal" th:action="@{/admin/resources}" method="post" th:object="${resources}">
             <input th:type="hidden" th:field="*{id}"/>
-            <div class="form-group">
-                <label for="urlName" class="col-sm-2 control-label">리소스명</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control input-large" th:field="*{urlName}" id="urlName"
-                           placeholder="리소스명">
-                </div>
-                <div class="field-error" th:errors="*{urlName}">
-                    리소스 오류
-                </div>
-            </div>
-            <div class="form-group">
-                <select th:field="*{role}" id="role">
-                    <option value="ROLE_USER" selected>일반</option>
-                    <option value="ROLE_MANAGER">매니저</option>
-                    <option value="ROLE_ADMIN">관리자</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <button type="Submit" class="btn btn-dark btn-lg">수정하기</button>
-                    <a class="btn btn-dark btn-lg" style="margin:10;" th:href="@{'/admin/resources/delete/' + *{id}}">삭제</a>
-                </div>
+            <table class="table text-center align-middle">
+                <thead>
+                <tr class="table-info">
+                    <th scope="col" style="width: 55%;">리소스명</th>
+                    <th scope="col" style="width: 15%;">권한</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="link_btn hover" style="height: 60px;">
+                    <td>
+                        <input type="text" class="form-control input-large text-center" th:field="*{urlName}"
+                               placeholder="리소스명을 입력해주세요">
+                        <div class="field-error" th:errors="*{urlName}">
+                            리소스 오류
+                        </div>
+                    </td>
+                    <td>
+                        <select class="text-center" th:field="*{role}" id="role" style="width: 100px;">
+                            <option value="ROLE_USER" selected>일반</option>
+                            <option value="ROLE_MANAGER">매니저</option>
+                            <option value="ROLE_ADMIN">관리자</option>
+                        </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="form-group d-flex justify-content-end me-5 mt-2">
+                <button type="Submit" class="btn btn-dark btn-lg me-3">수정</button>
+                <a class="btn btn-danger btn-lg"
+                   th:href="@{'/admin/resources/delete/' + *{id}}">삭제</a>
             </div>
         </form>
     </div>
 </div>
+<div th:replace="layout/footer::footer"></div>
 <script th:inline="javascript">
 /*<![CDATA[*/
    var result = /*[[${result}]]*/ null;
@@ -53,10 +52,12 @@
          alert("리소스 수정이 실패하였습니다");
       }
       if (result == "createTrue") {
-         alert("리소스가 등록 되었습니다");
+         alert("리소스 등록이 성공하였습니다");
       }
    });
 /*]]>*/
+
+
 </script>
 </body>
 </html>

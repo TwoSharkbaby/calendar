@@ -22,6 +22,8 @@ import workout.calendar.security.handler.CustomAuthenticationFailureHandler;
 import workout.calendar.security.handler.CustomAuthenticationSuccessHandler;
 import workout.calendar.security.metadatasource.UrlFilterInvocationSecurityMetadatsSource;
 import workout.calendar.security.provider.CustomAuthenticationProvider;
+import workout.calendar.security.service.CustomOAuth2UserService;
+import workout.calendar.security.service.CustomUserDetailsService;
 import workout.calendar.security.service.SecurityResourceService;
 
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ public class SecurityConfig {
     private final UrlResourcesMapFactoryBean urlResourcesMapFactoryBean;
     private final SecurityResourceService securityResourceService;
 
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomUserDetailsService customUserDetailsService;
     private final PasswordEncoder encoder;
 
     @Bean
@@ -51,21 +55,25 @@ public class SecurityConfig {
     public SecurityFilterChain formSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .antMatchers("/", "/register", "/denied", "/loginForm*").permitAll()
-                        .anyRequest().authenticated()
-//                        .anyRequest().permitAll()
+                                .antMatchers("/", "/register", "/denied", "/loginForm*").permitAll()
+//                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
+                .userDetailsService(customUserDetailsService)
                 .addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class)
                 .authenticationProvider(customAuthenticationProvider)
                 .exceptionHandling()
                 .accessDeniedHandler(customAccessDeniedHandler)
                 .and()
+                .oauth2Login(oauth2 -> oauth2.userInfoEndpoint(
+                        userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService)))
                 .formLogin()
-                .loginPage("/loginForm")
+                .loginPage("/user/loginForm")
                 .loginProcessingUrl("/login")
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler)
-                .permitAll();
+        ;
         return http.build();
     }
 
@@ -105,7 +113,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UrlFilterInvocationSecurityMetadatsSource urlFilterInvocationSecurityMetadatsSource(){
+    public UrlFilterInvocationSecurityMetadatsSource urlFilterInvocationSecurityMetadatsSource() {
         return new UrlFilterInvocationSecurityMetadatsSource(urlResourcesMapFactoryBean.getObject(), securityResourceService);
     }
 }

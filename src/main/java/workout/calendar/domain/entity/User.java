@@ -2,7 +2,9 @@ package workout.calendar.domain.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import workout.calendar.domain.RoleType;
+import workout.calendar.domain.auth.provider.OAuth2UserInfo;
 import workout.calendar.domain.dto.UserModifyFormDto;
 import workout.calendar.domain.dto.UserResisterFormDto;
 
@@ -11,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@ToString
 public class User extends BaseTimeEntity{
 
     @Id
@@ -56,5 +59,14 @@ public class User extends BaseTimeEntity{
         this.password = userModifyFormDto.getPassword();
         this.nickname = userModifyFormDto.getNickname();
         this.email = userModifyFormDto.getEmail();
+    }
+
+    public void setProviderUser(OAuth2UserInfo oAuth2UserInfo, String password){
+        this.username = oAuth2UserInfo.getProvider()+"_"+oAuth2UserInfo.getProviderId();
+        this.password = password;
+        this.email = oAuth2UserInfo.getEmail();
+        this.provider = oAuth2UserInfo.getProvider();
+        this.providerId = oAuth2UserInfo.getProviderId();
+        this.role = RoleType.ROLE_USER;
     }
 }

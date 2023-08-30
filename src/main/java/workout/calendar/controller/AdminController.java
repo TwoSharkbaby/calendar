@@ -6,10 +6,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import workout.calendar.domain.dto.ResourcesDto;
 import workout.calendar.domain.dto.UserRoleFormDto;
@@ -19,18 +16,19 @@ import workout.calendar.service.UserService;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
+@RequestMapping("/admin")
 @Controller
 public class AdminController {
 
     private final ResourceService resourceService;
     private final UserService userService;
 
-    @GetMapping(value = "/admin")
+    @GetMapping
     public String adminHome() {
         return "admin/home";
     }
 
-    @GetMapping(value = "/admin/accounts")
+    @GetMapping(value = "/accounts")
     public String usersList(@RequestParam(value = "cat", required = false) String cat,
                            @RequestParam(value = "info", required = false) String info,
                            @PageableDefault(size = 10) Pageable pageable,
@@ -41,13 +39,13 @@ public class AdminController {
         return "admin/user/list";
     }
 
-    @GetMapping(value = "/admin/accounts/{id}")
+    @GetMapping(value = "/accounts/{id}")
     public String userDetail(@PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("user", userService.getUserRoleForm(id));
         return "admin/user/detail";
     }
 
-    @PostMapping(value = "/admin/accounts")
+    @PostMapping(value = "/accounts")
     public String modifyUser(UserRoleFormDto userRoleFormDto, Model model, RedirectAttributes rtts) {
         Long id = userService.modifyRole(userRoleFormDto);
         if (id != null) {
@@ -59,32 +57,32 @@ public class AdminController {
         }
     }
 
-    @GetMapping(value = "/admin/accounts/delete/{id}")
+    @GetMapping(value = "/accounts/delete/{id}")
     public String removeUser(@PathVariable(value = "id") Long id, RedirectAttributes rtts) {
         userService.deleteUser(id);
         rtts.addFlashAttribute("result", "deleteTrue");
         return "redirect:/admin/accounts";
     }
 
-    @GetMapping(value = "/admin/resources")
+    @GetMapping(value = "/resources")
     public String resourcesList(@PageableDefault(size = 10) Pageable pageable, Model model) {
         model.addAttribute("resources", resourceService.getResourcesWithPage(pageable));
         return "admin/resource/list";
     }
 
-    @GetMapping(value = "/admin/resources/{id}")
+    @GetMapping(value = "/resources/{id}")
     public String resourcesDetail(@PathVariable Long id, Model model) {
         model.addAttribute("resources", resourceService.getResource(id));
         return "admin/resource/detail";
     }
 
-    @GetMapping(value = "/admin/resources/register")
+    @GetMapping(value = "/resources/register")
     public String resourcesResisterForm(Model model) {
         model.addAttribute("resources", new ResourcesDto());
         return "admin/resource/register";
     }
 
-    @PostMapping(value = "/admin/resources/register")
+    @PostMapping(value = "/resources/register")
     public String resisterResources(@Valid ResourcesDto resourcesDto, BindingResult result, RedirectAttributes rtts, Model model) {
         if (result.hasErrors()){
             return "admin/resource/register";
@@ -99,7 +97,7 @@ public class AdminController {
         return "redirect:/admin/resources/" + id;
     }
 
-    @PostMapping(value = "/admin/resources")
+    @PostMapping(value = "/resources")
     public String modifyResources(@Valid ResourcesDto resourcesDto, BindingResult result, RedirectAttributes rtts, Model model) {
         if (result.hasErrors()){
             return "admin/resource/detail";
@@ -114,7 +112,7 @@ public class AdminController {
         return "redirect:/admin/resources/" + id ;
     }
 
-    @GetMapping(value = "/admin/resources/delete/{id}")
+    @GetMapping(value = "/resources/delete/{id}")
     public String removeResources(@PathVariable Long id, RedirectAttributes rtts) {
         resourceService.deleteResource(id);
         rtts.addFlashAttribute("result", "deleteTrue");
