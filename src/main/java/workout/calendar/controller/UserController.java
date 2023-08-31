@@ -59,6 +59,7 @@ public class UserController {
     @PostMapping("/modify")
     public String modify(@Valid UserModifyFormDto userModifyFormDto, BindingResult result,
                          RedirectAttributes rtts, Model model, HttpServletRequest request) {
+        System.out.println("userModifyFormDto = " + userModifyFormDto);
         if (result.hasErrors()) {
             return "user/modify";
         } else {
@@ -77,8 +78,8 @@ public class UserController {
 
     @GetMapping("/loginForm")
     public String loginForm(@RequestParam(value = "error", required = false) String error,
-                            Model model) {
-        model.addAttribute("error", error);
+                            RedirectAttributes rtts) {
+        rtts.addFlashAttribute("error", error);
         return "user/loginForm";
     }
 

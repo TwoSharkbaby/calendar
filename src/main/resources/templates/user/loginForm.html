@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-
 <head th:replace="layout/header::userHead"></head>
 <body>
 <div th:replace="layout/top::header"></div>
@@ -12,9 +10,6 @@
         <div class="p-5 border border-secondary rounded-4" style="width: 50%;">
             <div class="panel mb-5">
                 <p class="fs-4 fw-bold">로그인</p>
-            </div>
-            <div th:if="${param.error}" class="form-group">
-                <span class="alert alert-danger">잘못된 아이디나 암호입니다</span>
             </div>
             <form th:action="@{/login}" class="form-signin" method="post">
                 <div class="form-group text-start mb-3">
@@ -49,12 +44,16 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
    var result = /*[[${result}]]*/ null;
+   var error = /*[[${param.error}]]*/ null;
    $(document).ready(function() {
       if (result == "registerTrue") {
          alert("회원 가입이 성공적으로 이루어졌습니다");
       }
       if (result == "modifyTrue") {
          alert("회원 수정이 성공적으로 이루어졌습니다. 다시 로그인 해주세요");
+      }
+      if (error == "true") {
+         alert("아이디와 비밀번호를 잘못 입력하셨습니다");
       }
    });
 /*]]>*/

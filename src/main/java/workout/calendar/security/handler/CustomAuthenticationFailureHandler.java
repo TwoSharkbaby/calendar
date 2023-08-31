@@ -17,7 +17,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
-        setDefaultFailureUrl("/loginForm?error=true");
+        setDefaultFailureUrl("/user/loginForm?error=true");
 
         super.onAuthenticationFailure(request, response, exception);
     }

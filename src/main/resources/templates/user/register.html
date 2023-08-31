@@ -1,57 +1,57 @@
-<html  xmlns:th="http:www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 <head th:replace="layout/header::userHead"></head>
 <body>
 <div th:replace="layout/top::header"></div>
-<body>
-
-<div class="container d-flex justify-content-center">
-    <div style="width:700px; margin-top: 30px;">
-        <form class="form-horizontal" th:action th:object="${userResisterFormDto}" method="post">
-            <div class="form-group">
-                <label for="username" class="col-sm-2 control-label">아이디</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control input-large" th:field="*{username}" id="username" placeholder="username" required>
+<div class="container" style="height:700px;">
+    <div class="container d-flex justify-content-center align-items-center text-center" style="height: 100%;">
+        <div class="p-5 border border-secondary rounded-4" style="width: 50%;">
+            <form class="form-horizontal" th:action th:object="${userResisterFormDto}" method="post">
+                <div class="panel mb-5">
+                    <p class="fs-4 fw-bold">회원가입</p>
+                </div>
+                <div class="form-group text-start mb-3">
+                    <label for="username" class="mb-2 fw-bold">아이디</label>
+                    <input type="text" class="form-control input-large" th:field="*{username}" id="username"
+                           placeholder="username" required>
                     <div class="field-error" th:errors="*{username}">
                         아이디 오류
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">비밀번호</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control input-large" th:field="*{password}" id="password" placeholder="Password" data-minlength="6" required>
+                <div class="form-group text-start mb-3">
+                    <label for="password" class="mb-2 fw-bold">비밀번호</label>
+                    <input type="password" class="form-control input-large" th:field="*{password}" id="password"
+                           placeholder="Password" data-minlength="6" required>
                     <div class="field-error" th:errors="*{password}">
                         비밀번호 오류
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">이메일</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control input-large" th:field="*{email}" id="email" placeholder="이메일" required>
+                <div class="form-group text-start mb-3">
+                    <label for="email" class="mb-2 fw-bold">이메일</label>
+                    <input type="email" class="form-control input-large" th:field="*{email}" id="email"
+                           placeholder="이메일" required>
                     <div class="field-error" th:errors="*{email}">
                         이메일 오류
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="nickname" class="col-sm-2 control-label">닉네임</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control input-large" th:field="*{nickname}" id="nickname" placeholder="닉네임" required>
+                <div class="form-group text-start mb-3">
+                    <label for="nickname" class="mb-2 fw-bold">닉네임</label>
+                    <input type="text" class="form-control input-large" th:field="*{nickname}" id="nickname"
+                           placeholder="닉네임" required>
                     <div class="field-error" th:errors="*{nickname}">
                         닉네임 오류
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <button type="Submit" class="btn btn-dark btn-lg">가입하기</button>
+                <div class="mt-5">
+                    <button type="Submit" class="btn btn-dark btn-lg" style="width: 100%;">가입하기</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+<div th:replace="layout/footer::footer"></div>
 <script th:inline="javascript">
 /*<![CDATA[*/
    var result = /*[[${result}]]*/ null;
@@ -61,6 +61,7 @@
       }
    });
 /*]]>*/
+
 </script>
 </body>
 </html>

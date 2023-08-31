@@ -88,8 +88,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Long modifyUser(UserModifyFormDto userModifyFormDto) {
         User user = userRepository.findById(userModifyFormDto.getId()).orElseThrow(IllegalArgumentException::new);
-        userModifyFormDto.setPassword(encoder.encode(userModifyFormDto.getPassword()));
-        user.changeInfo(userModifyFormDto);
+        if (user.getProvider() == null){
+            userModifyFormDto.setPassword(encoder.encode(userModifyFormDto.getPassword()));
+            user.changeInfo(userModifyFormDto);
+        } else {
+            user.changeProviderInfo(userModifyFormDto);
+        }
         return user.getId();
     }
 

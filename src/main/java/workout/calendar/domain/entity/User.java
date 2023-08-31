@@ -69,4 +69,9 @@ public class User extends BaseTimeEntity{
         this.providerId = oAuth2UserInfo.getProviderId();
         this.role = RoleType.ROLE_USER;
     }
+
+    public void changeProviderInfo(UserModifyFormDto userModifyFormDto) {
+        this.nickname = userModifyFormDto.getNickname();
+        this.email = userModifyFormDto.getEmail();
+    }
 }
