@@ -2,55 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="layout/header::userHead"></head>
-<script th:src="@{/js/index.global.js}"></script>
-<script th:src="@{/js/ko.global.js}"></script>
-<script>
-
-document.addEventListener("DOMContentLoaded", function () {
-  $(function () {
-    //var request = $.ajax({
-      //url: "/full-calendar/calendar-admin", // 변경하기
-      //method: "GET",
-      //dataType: "json",
-    //});
-    var request = [{"title":"123","start":2023-08-30}]
-    request.done(function (data) {
-      console.log(data);
-      var calendarEl = document.getElementById("calendar");
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
-        headerToolbar: {
-          start: "",
-          center: "title",
-        },
-        titleFormat: function (date) {
-          return (
-            date.date.year + "년 " + (parseInt(date.date.month) + 1) + "월"
-          );
-        },
-        droppable: true,
-        editable: true,
-        locale: "ko",
-        drop: function (arg) {
-          if (document.getElementById("drop-remove").checked) {
-            arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-          }
-        },
-        events: data,
-      });
-      calendar.render();
-    });
-    request.fail(function (jqXHR, textStatus) {
-      alert("Request failed: " + textStatus);
-    });
-  });
-});
-
-</script>
 <body>
 <div th:replace="layout/top::header"></div>
 <div class="container mt-5" style="height:800px;">
-    <div id='calendar'></div>
+    <div>켈린더</div>
+    <div>
+
+    </div>
 </div>
 <div th:replace="layout/footer::footer"></div>
 </body>
