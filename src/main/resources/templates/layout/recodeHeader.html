@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="recodeHead">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Home</title>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/jquery.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-grid.css"/>
+    <link rel="stylesheet" href="/css/css.css"/>
+    <link rel="stylesheet" href="/css/base.css"/>
+    <script src="/js/fullCalendar/index.js"></script>
+    <script src="/js/fullCalendar/ko.js"></script>
+    <script src="/js/fullCalendar/bootstrap5.js"></script>
+    <script src="/js/fullCalendar/core.js"></script>
+    <script src="/js/fullCalendar/daygrid.js"></script>
+    <script src="/js/fullCalendar/timegrid.js"></script>
+    <script src="/js/fullCalendar/list.js"></script>
+    <script src="/js/fullCalendar/interaction.js"></script>
+    <script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const token = $("meta[name='_csrf']").attr("content")
+        const header = $("meta[name='_csrf_header']").attr("content");
+
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'addEventButton'
+			},
+		    customButtons: {
+                addEventButton: { // 추가한 버튼 설정
+                    text : "기록 추가",
+                    click : function(){
+                        $("#calendarAddModal").modal("show");
+                }
+            }
+        },
+		locale : "ko",
+		timeZone: 'UTC',
+        events: [
+                /*[# th:each="recode : ${recode}"]*/
+                {
+                id: /*[[${recode.id}]]*/,
+                title: /*[[${recode.title}]]*/,
+                start: /*[[${recode.date}]]*/,
+                end: /*[[${recode.date}]]*/
+                },
+                /*[/]*/
+		],
+		eventClick:function(event) {
+		    var id = event.event.id;
+
+		    $.ajax({
+			    type: "GET",
+				url: "/recode/" + id,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json"
+			}).done(function(response) {
+                showModifyModal(response);
+			}).fail(function(error) {
+			     alert("올바르지 않은 접근 방식입니다");
+			});
+
+			function showModifyModal(response) {
+		        var eventDate = event.event.start;
+                var dateObj = new Date(eventDate);
+                var year = dateObj.getFullYear();
+                var month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                var day = dateObj.getDate().toString().padStart(2, '0');
+                var formattedDate = year + "-" + month + "-" + day;
+
+                $("#idM").val(response.id);
+                $("#titleM").val(event.event.title);
+                $("#memoM").text(response.memo);
+                $("#dateM").val(formattedDate);
+		        $("#calendarModifyModal").modal("show");
+		    }
+
+
+            }
+        });
+        calendar.render();
+
+        $("#addCalendar").on("click",function(){
+            var userId = $("#userId").val();
+            var title = $("#title").val();
+            var memo = $("#memo").val();
+            var date = $("#date").val();
+
+            if(title == null || title == ""){
+                alert("제목을 입력하세요.");
+            }else{
+                var recodeResisterFormDto = {
+                     "user" : {
+                         "id" : userId
+                     },
+                     "title" : title,
+                     "memo" : memo,
+                     "date" : date
+                }
+
+                $.ajax({
+				    type: "POST",
+				    url: "/recode/register",
+				    contentType: "application/json; charset=utf-8",
+				    dataType: "text",
+				    data : JSON.stringify(recodeResisterFormDto),
+				    beforeSend: function(xhr){
+			            xhr.setRequestHeader(header, token);
+			        },
+			    }).done(function(response) {
+				    alert("성공적으로 등록 되었습니다");
+				    location.reload();
+			    }).fail(function(error) {
+			        alert("제목은 10글자 이하로 메모는 100글자 이하로 작성해주세요");
+			    });
+            }
+        });
+
+        $("#deleteCalendar").on("click",function(){
+            var userId = $("#userIdM").val();
+            var id = $("#idM").val();
+
+            $.ajax({
+				type: "DELETE",
+				url: "/recode/delete/" + id + "/" + userId,
+				contentType: "application/json; charset=utf-8",
+				dataType: "text",
+				beforeSend: function(xhr){
+			        xhr.setRequestHeader(header, token);
+			    },
+			}).done(function(response) {
+				alert("성공적으로 삭제 되었습니다");
+				location.reload();
+			}).fail(function(error) {
+			    alert("올바르지 않은 접근 방식입니다");
+			});
+        });
+
+        $("#modifyCalendar").on("click",function(){
+            var userId = $("#userIdM").val();
+            var title = $("#titleM").val();
+            var memo = $("#memoM").val();
+            var date = $("#dateM").val();
+            var id = $("#idM").val();
+
+            if(title == null || title == ""){
+                alert("제목을 입력하세요.");
+            }else{
+                var recodeModifyFormDto = {
+                    "user" : {
+                       "id" : userId
+                    },
+                    "id" : id,
+                    "title" : title,
+                    "memo" : memo,
+                    "date" : date
+                }
+
+                $.ajax({
+				    type: "PUT",
+				    url: "/recode/modify",
+				    contentType: "application/json; charset=utf-8",
+				    dataType: "text",
+				    data : JSON.stringify(recodeModifyFormDto),
+				    beforeSend: function(xhr){
+			           xhr.setRequestHeader(header, token);
+			        },
+			    }).done(function(response) {
+				    alert("성공적으로 수정 되었습니다");
+				    location.reload();
+			    }).fail(function(error) {
+			        alert("제목은 10글자 이하로 메모는 100글자 이하로 작성해주세요");
+			    });
+            }
+        });
+
+    });
+</script>
+</head>
+</html>

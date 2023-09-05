@@ -1,15 +1,79 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:replace="layout/header::userHead"></head>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<head th:replace="layout/recodeHeader::recodeHead"></head>
 <body>
 <div th:replace="layout/top::header"></div>
 <div class="container mt-5" style="height:800px;">
-    <div>켈린더</div>
-    <div>
-
+    <div id='calendar'></div>
+    <div class="modal" id="calendarAddModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center mt-3">
+                    <h4 class="fw-bold">기록 등록</h4>
+                </div>
+                <div class="modal-body m-3">
+                    <input type="hidden" id="userId" th:value="${#authentication.principal.user.id}">
+                    <div class="form-group text-start mb-3">
+                        <label for="title" class="mb-2 fw-bold">제목</label>
+                        <input type="text" class="form-control input-large" id="title" name="title"
+                               placeholder="제목을 10글자 이내로 입력해주세요" required>
+                    </div>
+                    <div class="form-group text-start mb-3">
+                        <label for="memo" class="mb-2 fw-bold">메모</label>
+                        <textarea class="form-control input-large" id="memo" name="memo"
+                                  placeholder="메모 하실 내용을 입력해주세요" style="height:200px;"></textarea>
+                    </div>
+                    <div class="form-group text-start mb-3">
+                        <label for="date" class="mb-2 fw-bold">날짜</label>
+                        <input type="date" class="form-control input-large" id="date" name="date"
+                               required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="addCalendar">저장</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="modal" id="calendarModifyModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center mt-3">
+                    <h4 class="fw-bold">기록 수정</h4>
+                </div>
+                <div class="modal-body m-3">
+                    <input type="hidden" id="idM" value="">
+                    <input type="hidden" id="userIdM" th:value="${#authentication.principal.user.id}">
+                    <div class="form-group text-start mb-3">
+                        <label for="titleM" class="mb-2 fw-bold">제목</label>
+                        <input type="text" class="form-control input-large" id="titleM" name="titleM"
+                               placeholder="제목을 10글자 이내로 입력해주세요" required>
+                    </div>
+                    <div class="form-group text-start mb-3">
+                        <label for="memoM" class="mb-2 fw-bold">메모</label>
+                        <textarea class="form-control input-large" id="memoM" name="memoM"
+                                  placeholder="메모 하실 내용을 입력해주세요" style="height:200px;"></textarea>
+                    </div>
+                    <div class="form-group text-start mb-3">
+                        <label for="dateM" class="mb-2 fw-bold">날짜</label>
+                        <input type="date" class="form-control input-large" id="dateM" name="dateM"
+                               required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="modifyCalendar">수정</button>
+                    <button type="button" class="btn btn-danger" id="deleteCalendar">삭제</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="layout/footer::footer"></div>
 </div>
-<div th:replace="layout/footer::footer"></div>
 </body>
 </html>
