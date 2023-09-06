@@ -31,6 +31,7 @@ public class RecodeApiController {
     @PreAuthorize("principal.user.id == #recodeResisterFormDto.user.id")
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@Valid @RequestBody RecodeResisterFormDto recodeResisterFormDto, BindingResult result) {
+        System.out.println("recodeResisterFormDto = " + recodeResisterFormDto);
         if (result.hasErrors()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         } else {

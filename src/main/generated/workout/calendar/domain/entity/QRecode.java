@@ -34,9 +34,11 @@ public class QRecode extends EntityPathBase<Recode> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 
-    public final StringPath memo = createString("memo");
+    public final ListPath<Performance, QPerformance> performance = this.<Performance, QPerformance>createList("performance", Performance.class, QPerformance.class, PathInits.DIRECT2);
 
     public final StringPath title = createString("title");
+
+    public final NumberPath<Integer> totalWeight = createNumber("totalWeight", Integer.class);
 
     public final QUser user;
 

@@ -89,19 +89,86 @@
         $("#addCalendar").on("click",function(){
             var userId = $("#userId").val();
             var title = $("#title").val();
-            var memo = $("#memo").val();
             var date = $("#date").val();
+
+            var type1 = $("#type1").val();
+            var weight1 = $("#weight1").val();
+            var rep1 = $("#rep1").val();
+            var set1 = $("#set1").val();
+
+            var type2 = $("#type2").val();
+            var weight2 = $("#weight2").val();
+            var rep2 = $("#rep2").val();
+            var set2 = $("#set2").val();
+
+            var type3 = $("#type3").val();
+            var weight3 = $("#weight3").val();
+            var rep3 = $("#rep3").val();
+            var set3 = $("#set3").val();
+
+            var type4 = $("#type4").val();
+            var weight4 = $("#weight4").val();
+            var rep4 = $("#rep4").val();
+            var set4 = $("#set4").val();
+
+            var type5 = $("#type5").val();
+            var weight5 = $("#weight5").val();
+            var rep5 = $("#rep5").val();
+            var set5 = $("#set5").val();
+
+            var performance = [];
+
+            if (type1 != null && type1 != "" && weight1 != null && weight1 != "" && rep1 != null && rep1 != "" && set1 != null && set1 != "") {
+                performance.push({
+                "type": type1,
+                "weight": weight1,
+                "rep": rep1,
+                "setCount": set1
+            });
+            }
+            if (type2 != null && type2 != "" && weight2 != null && weight2 != "" && rep2 != null && rep2 != "" && set2 != null && set2 != "") {
+                performance.push({
+                "type": type2,
+                "weight": weight2,
+                "rep": rep2,
+                "setCount": set2
+            });
+            }
+            if (type3 != null && type3 != "" && weight3 != null && weight3 != "" && rep3 != null && rep3 != "" && set3 != null && set3 != "") {
+                performance.push({
+                "type": type3,
+                "weight": weight3,
+                "rep": rep3,
+                "setCount": set3
+            });
+            }
+            if (type4 != null && type4 != "" && weight4 != null && weight4 != "" && rep4 != null && rep4 != "" && set4 != null && set4 != "") {
+                performance.push({
+                "type": type4,
+                "weight": weight4,
+                "rep": rep4,
+                "setCount": set4
+            });
+            }
+            if (type5 != null && type5 != "" && weight5 != null && weight5 != "" && rep5 != null && rep5 != "" && set5 != null && set5 != "") {
+                performance.push({
+                "type": type5,
+                "weight": weight5,
+                "rep": rep5,
+                "setCount": set5
+            });
+            }
 
             if(title == null || title == ""){
                 alert("제목을 입력하세요.");
             }else{
                 var recodeResisterFormDto = {
-                     "user" : {
-                         "id" : userId
-                     },
-                     "title" : title,
-                     "memo" : memo,
-                     "date" : date
+                    "user" : {
+                        "id" : userId
+                    },
+                    "performanceList" : performance,
+                    "title" : title,
+                    "date" : date
                 }
 
                 $.ajax({
@@ -117,7 +184,7 @@
 				    alert("성공적으로 등록 되었습니다");
 				    location.reload();
 			    }).fail(function(error) {
-			        alert("제목은 10글자 이하로 메모는 100글자 이하로 작성해주세요");
+			        alert("제목은 10글자 이하로 작성해주세요");
 			    });
             }
         });
@@ -175,11 +242,42 @@
 				    alert("성공적으로 수정 되었습니다");
 				    location.reload();
 			    }).fail(function(error) {
-			        alert("제목은 10글자 이하로 메모는 100글자 이하로 작성해주세요");
+			        alert("제목은 10글자 이하로 작성해주세요");
 			    });
             }
         });
 
+        function calculateTotal() {
+            var totalWeight = 0;
+
+            for (var i = 1; i <= 5; i++) {
+                var weight = parseInt($("#weight" + i).val()) || 0;
+                var rep = parseInt($("#rep" + i).val()) || 0;
+                var set = parseInt($("#set" + i).val()) || 0;
+                totalWeight += weight * rep * set;
+            }
+
+            $("#totalWeight").text(totalWeight);
+        }
+
+        calculateTotal();
+
+        $("#totalWeightCheck").on("click", function() {
+            var totalWeight = 0;
+
+            for (var i = 1; i <= 5; i++) {
+                var weight = parseFloat($("#weight" + i).val());
+                var rep = parseInt($("#rep" + i).val());
+                var set = parseInt($("#set" + i).val());
+                var type = $("#type" + i).val();
+
+                if (!isNaN(weight) && !isNaN(rep) && !isNaN(set) && !isNaN(type) && type != "") {
+                    totalWeight += weight * rep * set;
+            }
+        }
+
+            $("#totalWeight").text(totalWeight);
+        });
     });
 </script>
 </head>

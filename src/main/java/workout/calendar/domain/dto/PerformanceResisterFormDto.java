@@ -4,19 +4,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import workout.calendar.domain.entity.User;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class RecodeDto {
+public class PerformanceResisterFormDto {
 
-    private Long id;
+    private String type;
 
+    private Integer weight;
 
+    private Integer rep;
 
+    private Integer setCount;
 }

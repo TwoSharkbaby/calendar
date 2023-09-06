@@ -57,9 +57,9 @@ public class SecurityConfig {
     public SecurityFilterChain formSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                                .antMatchers("/", "/register", "/denied", "/loginForm").permitAll()
-//                        .anyRequest().authenticated()
-                                .anyRequest().permitAll()
+                        .antMatchers("/", "/user/register", "/denied", "/user/loginForm").permitAll()
+                        .antMatchers("/admin").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
                 .userDetailsService(customUserDetailsService)
                 .addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class)
@@ -67,14 +67,15 @@ public class SecurityConfig {
                 .exceptionHandling()
                 .accessDeniedHandler(customAccessDeniedHandler)
                 .and()
-                .oauth2Login(oauth2 -> oauth2.userInfoEndpoint(
-                        userInfoEndpointConfig -> userInfoEndpointConfig
-                                .userService(customOAuth2UserService)))
                 .formLogin()
                 .loginPage("/user/loginForm")
                 .loginProcessingUrl("/login")
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler)
+                .and()
+                .oauth2Login(oauth2 -> oauth2.userInfoEndpoint(
+                        userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService)))
         ;
         return http.build();
     }

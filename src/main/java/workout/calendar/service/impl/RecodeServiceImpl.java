@@ -53,7 +53,7 @@ public class RecodeServiceImpl implements RecodeService {
     public RecodeDto getRecode(Long id) {
         Recode recode = recodeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         RecodeDto recodeDto = new RecodeDto();
-        recodeDto.setMemo(recode.getMemo());
+        //recodeDto.setMemo(recode.getMemo());
         recodeDto.setId(recode.getId());
         return recodeDto;
     }
