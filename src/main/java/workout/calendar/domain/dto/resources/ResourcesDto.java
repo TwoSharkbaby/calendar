@@ -1,5 +1,6 @@
-package workout.calendar.domain.dto;
+package workout.calendar.domain.dto.resources;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,9 +21,11 @@ public class ResourcesDto {
 
     private RoleType role;
 
+    @QueryProjection
     public ResourcesDto(Resources resources) {
         this.id = resources.getId();
         this.urlName = resources.getUrlName();
         this.role = resources.getRole();
     }
+
 }

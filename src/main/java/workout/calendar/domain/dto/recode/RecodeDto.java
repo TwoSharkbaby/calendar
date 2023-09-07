@@ -1,4 +1,4 @@
-package workout.calendar.domain.dto;
+package workout.calendar.domain.dto.recode;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,22 +11,23 @@ import workout.calendar.domain.entity.User;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class RecodeResisterFormDto {
+public class RecodeDto {
 
-    @NotEmpty(message = "제목은 필수 입니다")
-    @Size(max = 10, message = "제목은 10글자 이하만 가능합니다")
+    private Long id;
+
     private String title;
 
-    @NotEmpty(message = "날짜는 필수 입니다")
     private String date;
 
-    private User user;
-
-    private List<PerformanceResisterFormDto> performanceList;
-
+    public void setRecode(Recode recode) {
+        this.id = recode.getId();
+        this.title = recode.getTitle();
+        this.date = recode.getDate();
+    }
 }

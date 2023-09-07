@@ -76,12 +76,34 @@
 
                 $("#idM").val(response.id);
                 $("#titleM").val(event.event.title);
-                $("#memoM").text(response.memo);
                 $("#dateM").val(formattedDate);
+
+                var performance = response.performanceDto;
+
+                for (var i = 0; i < 5; i++) {
+                    var performanceIdInput = $("#performanceId" + (i + 1));
+                    var typeInput = $("#type" + (i + 1) + "M");
+                    var weightInput = $("#weight" + (i + 1) + "M");
+                    var repInput = $("#rep" + (i + 1) + "M");
+                    var setInput = $("#set" + (i + 1) + "M");
+
+                    if (performance[i]) {
+                        performanceIdInput.val(performance[i].id);
+                        typeInput.val(performance[i].type);
+                        weightInput.val(performance[i].weight);
+                        repInput.val(performance[i].rep);
+                        setInput.val(performance[i].setCount);
+                    } else {
+                        performanceIdInput.val('');
+                        typeInput.val('');
+                        weightInput.val('');
+                        repInput.val('');
+                        setInput.val('');
+                    }
+                }
+                calculateTotalM();
 		        $("#calendarModifyModal").modal("show");
 		    }
-
-
             }
         });
         calendar.render();
@@ -212,9 +234,86 @@
         $("#modifyCalendar").on("click",function(){
             var userId = $("#userIdM").val();
             var title = $("#titleM").val();
-            var memo = $("#memoM").val();
             var date = $("#dateM").val();
             var id = $("#idM").val();
+
+            var performanceId1 = $("#performanceId1").val();
+            var type1 = $("#type1M").val();
+            var weight1 = $("#weight1M").val();
+            var rep1 = $("#rep1M").val();
+            var set1 = $("#set1M").val();
+
+            var performanceId2 = $("#performanceId2").val();
+            var type2 = $("#type2M").val();
+            var weight2 = $("#weight2M").val();
+            var rep2 = $("#rep2M").val();
+            var set2 = $("#set2M").val();
+
+            var performanceId3 = $("#performanceId3").val();
+            var type3 = $("#type3M").val();
+            var weight3 = $("#weight3M").val();
+            var rep3 = $("#rep3M").val();
+            var set3 = $("#set3M").val();
+
+            var performanceId4 = $("#performanceId4").val();
+            var type4 = $("#type4M").val();
+            var weight4 = $("#weight4M").val();
+            var rep4 = $("#rep4M").val();
+            var set4 = $("#set4M").val();
+
+            var performanceId5 = $("#performanceId5").val();
+            var type5 = $("#type5M").val();
+            var weight5 = $("#weight5M").val();
+            var rep5 = $("#rep5M").val();
+            var set5 = $("#set5M").val();
+
+            var performance = [];
+
+            if (type1 != null && type1 != "" && weight1 != null && weight1 != "" && rep1 != null && rep1 != "" && set1 != null && set1 != "") {
+                performance.push({
+                "id": performanceId1,
+                "type": type1,
+                "weight": weight1,
+                "rep": rep1,
+                "setCount": set1
+            });
+            }
+            if (type2 != null && type2 != "" && weight2 != null && weight2 != "" && rep2 != null && rep2 != "" && set2 != null && set2 != "") {
+                performance.push({
+                "id": performanceId2,
+                "type": type2,
+                "weight": weight2,
+                "rep": rep2,
+                "setCount": set2
+            });
+            }
+            if (type3 != null && type3 != "" && weight3 != null && weight3 != "" && rep3 != null && rep3 != "" && set3 != null && set3 != "") {
+                performance.push({
+                "id": performanceId3,
+                "type": type3,
+                "weight": weight3,
+                "rep": rep3,
+                "setCount": set3
+            });
+            }
+            if (type4 != null && type4 != "" && weight4 != null && weight4 != "" && rep4 != null && rep4 != "" && set4 != null && set4 != "") {
+                performance.push({
+                "id": performanceId4,
+                "type": type4,
+                "weight": weight4,
+                "rep": rep4,
+                "setCount": set4
+            });
+            }
+            if (type5 != null && type5 != "" && weight5 != null && weight5 != "" && rep5 != null && rep5 != "" && set5 != null && set5 != "") {
+                performance.push({
+                "id": performanceId5,
+                "type": type5,
+                "weight": weight5,
+                "rep": rep5,
+                "setCount": set5
+            });
+            }
 
             if(title == null || title == ""){
                 alert("제목을 입력하세요.");
@@ -223,9 +322,9 @@
                     "user" : {
                        "id" : userId
                     },
+                    "performanceDto" : performance,
                     "id" : id,
                     "title" : title,
-                    "memo" : memo,
                     "date" : date
                 }
 
@@ -260,6 +359,19 @@
             $("#totalWeight").text(totalWeight);
         }
 
+        function calculateTotalM() {
+            var totalWeightM = 0;
+
+            for (var i = 1; i <= 5; i++) {
+                var weight = parseInt($("#weight" + i + "M").val()) || 0;
+                var rep = parseInt($("#rep" + i + "M").val()) || 0;
+                var set = parseInt($("#set" + i + "M").val()) || 0;
+                totalWeightM += weight * rep * set;
+            }
+
+            $("#totalWeightM").text(totalWeightM);
+        }
+
         calculateTotal();
 
         $("#totalWeightCheck").on("click", function() {
@@ -271,12 +383,29 @@
                 var set = parseInt($("#set" + i).val());
                 var type = $("#type" + i).val();
 
-                if (!isNaN(weight) && !isNaN(rep) && !isNaN(set) && !isNaN(type) && type != "") {
+                if (type.trim() !== "" && !isNaN(weight) && !isNaN(rep) && !isNaN(set)) {
                     totalWeight += weight * rep * set;
             }
         }
 
             $("#totalWeight").text(totalWeight);
+        });
+
+        $("#totalWeightCheckM").on("click", function() {
+            var totalWeightM = 0;
+
+            for (var i = 1; i <= 5; i++) {
+                var weight = parseFloat($("#weight" + i + "M").val());
+                var rep = parseInt($("#rep" + i + "M").val());
+                var set = parseInt($("#set" + i + "M").val());
+                var type = $("#type" + i + "M").val();
+
+                if (type.trim() !== "" && !isNaN(weight) && !isNaN(rep) && !isNaN(set)) {
+                    totalWeightM += weight * rep * set;
+            }
+        }
+
+            $("#totalWeightM").text(totalWeightM);
         });
     });
 </script>

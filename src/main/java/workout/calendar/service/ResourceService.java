@@ -2,12 +2,12 @@ package workout.calendar.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import workout.calendar.domain.dto.ResourcesDto;
+import workout.calendar.domain.dto.resources.ResourcesDto;
 import workout.calendar.domain.entity.Resources;
 
 public interface ResourceService {
 
-    Page<Resources> getResourcesWithPage(Pageable pageable);
+    Page<ResourcesDto> getResourcesWithPage(Pageable pageable);
 
     Long createResource(ResourcesDto resourcesDto);
 

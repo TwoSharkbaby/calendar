@@ -5,8 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import workout.calendar.domain.RoleType;
 import workout.calendar.domain.auth.provider.OAuth2UserInfo;
-import workout.calendar.domain.dto.UserModifyFormDto;
-import workout.calendar.domain.dto.UserResisterFormDto;
+import workout.calendar.domain.dto.user.UserModifyFormDto;
+import workout.calendar.domain.dto.user.UserResisterFormDto;
 
 import javax.persistence.*;
 

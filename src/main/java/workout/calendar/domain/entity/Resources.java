@@ -3,7 +3,7 @@ package workout.calendar.domain.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import workout.calendar.domain.RoleType;
-import workout.calendar.domain.dto.ResourcesDto;
+import workout.calendar.domain.dto.resources.ResourcesDto;
 
 import javax.persistence.*;
 

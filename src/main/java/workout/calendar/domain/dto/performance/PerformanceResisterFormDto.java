@@ -1,4 +1,4 @@
-package workout.calendar.domain.dto;
+package workout.calendar.domain.dto.performance;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

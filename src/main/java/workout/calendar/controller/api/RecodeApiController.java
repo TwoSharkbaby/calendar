@@ -7,11 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import workout.calendar.domain.dto.RecodeDto;
-import workout.calendar.domain.dto.RecodeModifyFormDto;
-import workout.calendar.domain.dto.RecodeResisterFormDto;
-import workout.calendar.domain.entity.Recode;
-import workout.calendar.repository.RecodeRepository;
+import workout.calendar.domain.dto.recode.RecodeDto;
+import workout.calendar.domain.dto.recode.RecodeModifyFormDto;
+import workout.calendar.domain.dto.recode.RecodeResisterFormDto;
 import workout.calendar.service.RecodeService;
 
 import javax.validation.Valid;
@@ -31,7 +29,6 @@ public class RecodeApiController {
     @PreAuthorize("principal.user.id == #recodeResisterFormDto.user.id")
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@Valid @RequestBody RecodeResisterFormDto recodeResisterFormDto, BindingResult result) {
-        System.out.println("recodeResisterFormDto = " + recodeResisterFormDto);
         if (result.hasErrors()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         } else {

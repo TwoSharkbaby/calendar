@@ -7,8 +7,7 @@ import workout.calendar.domain.entity.Resources;
 
 import java.util.List;
 
-public interface ResourcesRepository extends JpaRepository<Resources, Long> {
-    Page<Resources> findAll(Pageable pageable);
+public interface ResourcesRepository extends JpaRepository<Resources, Long>, ResourceRepositoryCustom {
 
     Resources findByUrlName(String urlName);
 }

@@ -19,3 +19,33 @@ a.no-link {
 .navbar {
     border-bottom: 1px solid gray;
 }
+
+.chart-container1 {
+    display: flex; /* 플렉스박스 사용 */
+    justify-content: space-between; /* 요소 사이의 간격을 최대화하여 배치 */
+    height: 350px;
+}
+
+.chart-div1 {
+    width: 48%; /* 각 차트의 너비 설정 */
+    border: 1px solid #dee2e6; /* 테두리 추가 (선택사항) */
+    border-radius: 15px; /* 둥근 효과를 주고자 하는 정도 설정 */
+    overflow: hidden; /* 둥근 효과를 벗어나는 내용 숨김 */
+}
+
+.chart-container {
+    display: flex; /* 플렉스박스 사용 */
+    justify-content: space-between; /* 요소 사이의 간격을 최대화하여 배치 */
+}
+
+.chart-div {
+    width: 48%; /* 각 차트의 너비 설정 */
+    border: 1px solid #dee2e6; /* 테두리 추가 (선택사항) */
+    border-radius: 15px; /* 둥근 효과를 주고자 하는 정도 설정 */
+    overflow: hidden; /* 둥근 효과를 벗어나는 내용 숨김 */
+}
+
+.blurEffect {
+    filter: blur(4px);
+    -webkit-filter: blur(4px);
+}

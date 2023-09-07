@@ -9,9 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import workout.calendar.domain.dto.UserModifyFormDto;
-import workout.calendar.domain.dto.UserResisterFormDto;
-import workout.calendar.domain.entity.User;
+import workout.calendar.domain.dto.user.UserModifyFormDto;
+import workout.calendar.domain.dto.user.UserResisterFormDto;
 import workout.calendar.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;

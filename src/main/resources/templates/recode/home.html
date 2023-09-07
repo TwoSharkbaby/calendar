@@ -84,12 +84,12 @@
     </div>
 
     <div class="modal" id="calendarModifyModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center mt-3">
+                <div class="modal-header d-flex justify-content-center mt-4">
                     <h4 class="fw-bold">기록 수정</h4>
                 </div>
-                <div class="modal-body m-3">
+                <div class="modal-body m-4">
                     <input type="hidden" id="idM" value="">
                     <input type="hidden" id="userIdM" th:value="${#authentication.principal.user.id}">
                     <div class="form-group text-start mb-3">
@@ -98,11 +98,59 @@
                                placeholder="제목을 10글자 이내로 입력해주세요" required>
                     </div>
                     <div class="form-group text-start mb-3">
-                        <label for="memoM" class="mb-2 fw-bold">메모</label>
-                        <textarea class="form-control input-large" id="memoM" name="memoM"
-                                  placeholder="메모 하실 내용을 입력해주세요" style="height:200px;"></textarea>
+                        <table class="table table-borderless">
+                            <thead>
+                            <tr class="text-center">
+                                <th scope="col" style="width: 40%;">운동명</th>
+                                <th scope="col" style="width: 20%;">무게</th>
+                                <th scope="col" style="width: 20%;">갯수</th>
+                                <th scope="col" style="width: 20%;">세트</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <input type="hidden" id="performanceId1" value="">
+                                <td><input type="text" class="form-control text-center" id="type1M" name="type1M"></td>
+                                <td><input type="text" class="form-control text-center" id="weight1M" name="weight1M"></td>
+                                <td><input type="text" class="form-control text-center" id="rep1M" name="rep1M"></td>
+                                <td><input type="text" class="form-control text-center" id="set1M" name="set1M"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <input type="hidden" id="performanceId2" value="">
+                                <td><input type="text" class="form-control text-center" id="type2M" name="type2M"></td>
+                                <td><input type="text" class="form-control text-center" id="weight2M" name="weight2M"></td>
+                                <td><input type="text" class="form-control text-center" id="rep2M" name="rep2M"></td>
+                                <td><input type="text" class="form-control text-center" id="set2M" name="set2M"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <input type="hidden" id="performanceId3" value="">
+                                <td><input type="text" class="form-control text-center" id="type3M" name="type3M"></td>
+                                <td><input type="text" class="form-control text-center" id="weight3M" name="weight3M"></td>
+                                <td><input type="text" class="form-control text-center" id="rep3M" name="rep3M"></td>
+                                <td><input type="text" class="form-control text-center" id="set3M" name="set3M"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <input type="hidden" id="performanceId4" value="">
+                                <td><input type="text" class="form-control text-center" id="type4M" name="type4M"></td>
+                                <td><input type="text" class="form-control text-center" id="weight4M" name="weight4M"></td>
+                                <td><input type="text" class="form-control text-center" id="rep4M" name="rep4M"></td>
+                                <td><input type="text" class="form-control text-center" id="set4M" name="set4M"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <input type="hidden" id="performanceId5" value="">
+                                <td><input type="text" class="form-control text-center" id="type5M" name="type5M"></td>
+                                <td><input type="text" class="form-control text-center" id="weight5M" name="weight5M"></td>
+                                <td><input type="text" class="form-control text-center" id="rep5M" name="rep5M"></td>
+                                <td><input type="text" class="form-control text-center" id="set5M" name="set5M"></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="form-group text-start mb-3">
+                    <div class="d-flex justify-content-center text-center align-items-center mt-3 mb-3">
+                        <button id="totalWeightCheckM" class="btn btn-primary me-3">총 무게 확인</button>
+                        <h5 id="totalWeightM"></h5><h5>&nbsp;KG</h5>
+                    </div>
+                    <div class="form-group text-start mb-4">
                         <label for="dateM" class="mb-2 fw-bold">날짜</label>
                         <input type="date" class="form-control input-large" id="dateM" name="dateM"
                                required>
@@ -116,6 +164,7 @@
             </div>
         </div>
     </div>
+
     <div th:replace="layout/footer::footer"></div>
 </div>
 </body>

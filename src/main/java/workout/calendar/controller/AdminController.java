@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import workout.calendar.domain.dto.ResourcesDto;
-import workout.calendar.domain.dto.UserRoleFormDto;
+import workout.calendar.domain.dto.resources.ResourcesDto;
+import workout.calendar.domain.dto.user.UserRoleFormDto;
 import workout.calendar.service.ResourceService;
 import workout.calendar.service.UserService;
 
@@ -64,6 +64,7 @@ public class AdminController {
         return "redirect:/admin/accounts";
     }
 
+    // 반환값 DTO로 수정 필요
     @GetMapping(value = "/resources")
     public String resourcesList(@PageableDefault(size = 10) Pageable pageable, Model model) {
         model.addAttribute("resources", resourceService.getResourcesWithPage(pageable));

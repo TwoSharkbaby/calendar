@@ -3,8 +3,9 @@ package workout.calendar.domain.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import workout.calendar.domain.dto.RecodeModifyFormDto;
-import workout.calendar.domain.dto.RecodeResisterFormDto;
+import workout.calendar.domain.dto.performance.PerformanceDto;
+import workout.calendar.domain.dto.recode.RecodeModifyFormDto;
+import workout.calendar.domain.dto.recode.RecodeResisterFormDto;
 
 import javax.persistence.*;
 import java.util.List;
@@ -56,9 +57,17 @@ public class Recode extends BaseTimeEntity{
     public void modifyRecode(RecodeModifyFormDto recodeModifyFormDto) {
         this.title = recodeModifyFormDto.getTitle();
         this.date = recodeModifyFormDto.getDate();
+        this.totalWeight = recodeModifyFormDto.getPerformanceDto()
+                .stream()
+                .mapToInt(dto -> dto.getWeight() * dto.getRep() * dto.getSetCount())
+                .sum();
+        this.performance = recodeModifyFormDto.getPerformanceDto()
+                .stream().map(dto -> {
+                    Performance performance1 = new Performance();
+                    performance1.setPerformanceDto(dto);
+                    performance1.setRecode(this);
+                    return performance1;
+                }).collect(Collectors.toList());
     }
 
-    public void setTotalWeight(){
-
-    }
 }

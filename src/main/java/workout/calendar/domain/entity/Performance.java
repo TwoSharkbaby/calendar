@@ -3,10 +3,10 @@ package workout.calendar.domain.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import workout.calendar.domain.dto.PerformanceResisterFormDto;
+import workout.calendar.domain.dto.performance.PerformanceDto;
+import workout.calendar.domain.dto.performance.PerformanceResisterFormDto;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -40,5 +40,12 @@ public class Performance {
         this.weight = performanceResisterFormDto.getWeight();
         this.rep = performanceResisterFormDto.getRep();
         this.setCount = performanceResisterFormDto.getSetCount();
+    }
+
+    public void setPerformanceDto(PerformanceDto performanceDto){
+        this.type = performanceDto.getType();
+        this.weight = performanceDto.getWeight();
+        this.rep = performanceDto.getRep();
+        this.setCount = performanceDto.getSetCount();
     }
 }

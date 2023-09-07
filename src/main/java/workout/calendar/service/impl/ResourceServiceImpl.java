@@ -5,9 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import workout.calendar.domain.dto.ResourcesDto;
+import workout.calendar.domain.dto.resources.ResourcesDto;
 import workout.calendar.domain.entity.Resources;
-import workout.calendar.domain.entity.User;
 import workout.calendar.repository.ResourcesRepository;
 import workout.calendar.security.metadatasource.UrlFilterInvocationSecurityMetadatsSource;
 import workout.calendar.service.ResourceService;
@@ -23,8 +22,8 @@ public class ResourceServiceImpl implements ResourceService {
     private final UrlFilterInvocationSecurityMetadatsSource urlFilterInvocationSecurityMetadatsSource;
 
     @Override
-    public Page<Resources> getResourcesWithPage(Pageable pageable) {
-        return resourcesRepository.findAll(pageable);
+    public Page<ResourcesDto> getResourcesWithPage(Pageable pageable) {
+        return resourcesRepository.getResourcesWithPage(pageable);
     }
 
     @Override

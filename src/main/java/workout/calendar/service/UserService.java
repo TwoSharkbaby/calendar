@@ -2,9 +2,9 @@ package workout.calendar.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import workout.calendar.domain.dto.UserModifyFormDto;
-import workout.calendar.domain.dto.UserResisterFormDto;
-import workout.calendar.domain.dto.UserRoleFormDto;
+import workout.calendar.domain.dto.user.UserModifyFormDto;
+import workout.calendar.domain.dto.user.UserResisterFormDto;
+import workout.calendar.domain.dto.user.UserRoleFormDto;
 
 public interface UserService {
 
