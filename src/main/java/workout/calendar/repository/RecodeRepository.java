@@ -7,7 +7,7 @@ import workout.calendar.domain.entity.Recode;
 
 import java.util.List;
 
-public interface RecodeRepository extends JpaRepository<Recode, Long> {
+public interface RecodeRepository extends JpaRepository<Recode, Long>, RecodeRepositoryCustom {
 
     List<Recode> findByUserId(Long id);
 

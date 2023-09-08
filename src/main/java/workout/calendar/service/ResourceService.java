@@ -2,6 +2,7 @@ package workout.calendar.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import workout.calendar.domain.dto.recode.RecodeMonthListDto;
 import workout.calendar.domain.dto.resources.ResourcesDto;
 import workout.calendar.domain.entity.Resources;
 
@@ -16,4 +17,5 @@ public interface ResourceService {
     void deleteResource(Long id);
 
     Long modifyResource(ResourcesDto resourcesDto);
+
 }

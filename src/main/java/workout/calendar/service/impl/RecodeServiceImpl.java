@@ -6,15 +6,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import workout.calendar.domain.auth.PrincipalDetails;
-import workout.calendar.domain.dto.recode.RecodeDto;
-import workout.calendar.domain.dto.recode.RecodeModifyFormDto;
-import workout.calendar.domain.dto.recode.RecodeResisterFormDto;
+import workout.calendar.domain.dto.recode.*;
 import workout.calendar.domain.entity.Performance;
 import workout.calendar.domain.entity.Recode;
 import workout.calendar.repository.PerformanceRepository;
 import workout.calendar.repository.RecodeRepository;
 import workout.calendar.service.RecodeService;
 
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,5 +71,57 @@ public class RecodeServiceImpl implements RecodeService {
     @Override
     public void deleteRecode(Long id) {
         recodeRepository.deleteById(id);
+    }
+
+    @Override
+    public RecodeMonthListDto getMonthRecode() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ANONYMOUS"))) {
+            return null;
+        } else {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            Long id = principalDetails.getUser().getId();
+
+            YearMonth thisMonth = YearMonth.now();
+            LocalDate startDate = thisMonth.atDay(1);
+            LocalDate endDate = thisMonth.atEndOfMonth();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            String startDateStr = startDate.format(formatter);
+            String endDateStr = endDate.format(formatter);
+
+            List<RecodeTotalDto> monthTotalWeight = recodeRepository.getTotalWeight(id, startDateStr, endDateStr);
+            RecodeMonthListDto recodeMonthListDto = new RecodeMonthListDto();
+            recodeMonthListDto.setRecodeMonthDto(monthTotalWeight);
+
+            return recodeMonthListDto;
+        }
+    }
+
+    @Override
+    public RecodeYearListDto getYearRecode() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ANONYMOUS"))) {
+            return null;
+        } else {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            Long id = principalDetails.getUser().getId();
+
+            Year thisYear = Year.now();
+            LocalDate startOfYear = thisYear.atDay(1);
+            LocalDate endOfYear = thisYear.atDay(1).plusYears(1).minusDays(1);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String startOfYearStr = startOfYear.format(formatter);
+            String endOfYearStr = endOfYear.format(formatter);
+
+            List<RecodeTotalDto> monthTotalWeight = recodeRepository.getTotalWeight(id, startOfYearStr, endOfYearStr);
+            RecodeYearListDto recodeYearListDto = new RecodeYearListDto();
+            recodeYearListDto.setRecodeYearDto(monthTotalWeight);
+            System.out.println("recodeYearListDto = " + recodeYearListDto);
+            return recodeYearListDto;
+        }
     }
 }

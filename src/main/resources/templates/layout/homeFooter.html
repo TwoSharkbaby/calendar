@@ -74,12 +74,14 @@ if ([[${#authorization.expression('isAnonymous()')}]]) {
 if ([[${#authorization.expression('isAuthenticated()')}]]) {
   const ctx3 = document.getElementById('myChart3');
 
+  var recodeYearListDto = /*[[${recodeYearListDto}]]*/ null;
+
   new Chart(ctx3, {
     type: 'line',
     data: {
-      labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+      labels: Object.keys(recodeYearListDto.dateAndTotalWeight),
       datasets: [{
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        data: Object.values(recodeYearListDto.dateAndTotalWeight),
         borderWidth: 1
       }]
     },
@@ -90,7 +92,7 @@ if ([[${#authorization.expression('isAuthenticated()')}]]) {
         plugins: {
             title: {
                 display: true,
-                text: '월간',
+                text: '올해',
                 font: {
                     size: 20
                 }
@@ -98,18 +100,33 @@ if ([[${#authorization.expression('isAuthenticated()')}]]) {
             legend: {
                 display: false,
             }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '중량 ( T )',
+                    font: {
+                        size: 12,
+                        weight: 'bold'
+                    }
+                }
+            }
         }
     }
   });
 
-    const ctx4 = document.getElementById('myChart4');
+  const ctx4 = document.getElementById('myChart4');
+
+  var recodeMonthListDto = /*[[${recodeMonthListDto}]]*/ null;
 
   new Chart(ctx4, {
     type: 'line',
     data: {
-      labels: ['1', '3', '5', '8', '10', '12', '15', '17', '19', '22', '24', '26', '29', '31'],
+      labels: Object.keys(recodeMonthListDto.dateAndTotalWeight),
       datasets: [{
-        data: ['1', '3', '5', '8', '10', '12', '15', '17', '19', '22', '24', '26', '29', '31'],
+        data: Object.values(recodeMonthListDto.dateAndTotalWeight),
         borderWidth: 1
       }]
     },
@@ -120,13 +137,26 @@ if ([[${#authorization.expression('isAuthenticated()')}]]) {
         plugins: {
             title: {
                 display: true,
-                text: '이전달',
+                text: '이번 달',
                 font: {
                     size: 20
                 }
             },
             legend: {
                 display: false,
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '중량 ( KG )',
+                    font: {
+                        size: 12,
+                        weight: 'bold'
+                    }
+                }
             }
         }
     }

@@ -1,8 +1,6 @@
 package workout.calendar.service;
 
-import workout.calendar.domain.dto.recode.RecodeDto;
-import workout.calendar.domain.dto.recode.RecodeModifyFormDto;
-import workout.calendar.domain.dto.recode.RecodeResisterFormDto;
+import workout.calendar.domain.dto.recode.*;
 
 import java.util.List;
 
@@ -17,4 +15,8 @@ public interface RecodeService {
     RecodeModifyFormDto getRecode(Long id);
 
     void deleteRecode(Long id);
+
+    RecodeMonthListDto getMonthRecode();
+
+    RecodeYearListDto getYearRecode();
 }

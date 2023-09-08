@@ -8,6 +8,7 @@ import workout.calendar.domain.dto.recode.RecodeModifyFormDto;
 import workout.calendar.domain.dto.recode.RecodeResisterFormDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,7 @@ public class Recode extends BaseTimeEntity{
     private User user;
 
     @OneToMany(mappedBy = "recode", cascade = CascadeType.ALL)
-    private List<Performance> performance;
+    private List<Performance> performance = new ArrayList<>();
 
     private Integer totalWeight;
 
