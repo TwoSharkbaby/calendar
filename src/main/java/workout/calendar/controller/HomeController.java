@@ -10,15 +10,10 @@ import workout.calendar.domain.auth.PrincipalDetails;
 import workout.calendar.service.RecodeService;
 
 @Controller
-@RequiredArgsConstructor
 public class HomeController {
-
-    private final RecodeService recodeService;
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("recodeMonthListDto", recodeService.getMonthRecode());
-        model.addAttribute("recodeYearListDto", recodeService.getYearRecode());
         return "home";
     }
 

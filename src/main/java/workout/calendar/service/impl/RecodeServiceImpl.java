@@ -120,7 +120,6 @@ public class RecodeServiceImpl implements RecodeService {
             List<RecodeTotalDto> monthTotalWeight = recodeRepository.getTotalWeight(id, startOfYearStr, endOfYearStr);
             RecodeYearListDto recodeYearListDto = new RecodeYearListDto();
             recodeYearListDto.setRecodeYearDto(monthTotalWeight);
-            System.out.println("recodeYearListDto = " + recodeYearListDto);
             return recodeYearListDto;
         }
     }

@@ -5,7 +5,7 @@
 <head th:replace="layout/header::userHead"></head>
 <body>
 <div th:replace="layout/top::header"></div>
-<div class="container" style="height:700px;">
+<div class="container" style="height:740px;">
     <div class="container d-flex justify-content-center align-items-center text-center" style="height: 100%;">
         <div class="p-5 border border-secondary rounded-4" style="width: 50%;">
             <form class="form-horizontal" th:action="@{/user/modify}" th:object="${userModifyFormDto}" method="post">

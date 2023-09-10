@@ -57,7 +57,7 @@ public class SecurityConfig {
     public SecurityFilterChain formSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .antMatchers("/", "/user/register", "/denied", "/user/loginForm").permitAll()
+                        .antMatchers("/", "/user/register", "/denied", "/user/loginForm", "/workout").permitAll()
                         .antMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

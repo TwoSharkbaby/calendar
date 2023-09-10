@@ -4,31 +4,45 @@
 <head th:replace="layout/header::userHead"></head>
 <body>
 <div th:replace="layout/top::header"></div>
-<div class="container" style="height:700px;">
-    <div class="chart-container1 mt-5">
-        <div class="chart-div1">
-            <h1>운동정보</h1>
-        </div>
-        <div class="chart-div1">
-            <h1>헬스장 지도</h1>
-        </div>
+<div class="container" style="height:740px;">
+    <div class="chart-container2 mt-4 justify-content-center align-items-center text-center" >
+        <h1 class="h1Text">Welcome!! Workout Calendar</h1>
     </div>
-    <div class="chart-container mt-5" sec:authorize="isAnonymous()">
-        <div class="chart-div d-flex justify-content-center align-items-center position-relative">
-            <canvas id="myChart1" class="blurEffect"></canvas>
-            <a th:href="@{/user/loginForm}" class="btn btn-primary position-absolute top-50 start-50 translate-middle">로그인 하기</a>
+    <div class="chart-container1 mt-4">
+        <div class="map">
+            <div class="text-center"><h3 class="fw-bold mb-3">오늘의 영상</h3></div>
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true"
+                 style="width: 100%; height: 300px">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <a href="https://www.youtube.com/watch?app=desktop&v=EBjYQeeBI-0" target="_blank">
+                            <img th:src="@{/images/dead.png}" class="d-block w-100 kakaoMap" style="width: 100%; height: 300px">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="https://www.youtube.com/watch?v=1vE3j7GGgbQ" target="_blank">
+                            <img th:src="@{/images/men.png}" class="d-block w-100 kakaoMap" style="width: 100%; height: 300px">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="https://www.youtube.com/watch?v=wk-eduLDSKg" target="_blank">
+                            <img th:src="@{/images/eat.png}" class="d-block w-100 kakaoMap" style="width: 100%; height: 300px">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="chart-div d-flex justify-content-center align-items-center position-relative">
-            <canvas id="myChart2" class="blurEffect"></canvas>
-            <a th:href="@{/user/loginForm}" class="btn btn-primary position-absolute top-50 start-50 translate-middle">로그인 하기</a>
-        </div>
-    </div>
-    <div class="chart-container mt-5" sec:authorize="isAuthenticated()">
-        <div class="chart-div">
-            <canvas id="myChart3"></canvas>
-        </div>
-        <div class="chart-div">
-            <canvas id="myChart4"></canvas>
+        <div class="map">
+            <div class="text-center"><h3 class="fw-bold mb-3">주변 헬스장</h3></div>
+            <div id="map" class="kakaoMap" style="width: 100%; height: 300px"></div>
         </div>
     </div>
 </div>
@@ -42,6 +56,7 @@
       }
    });
 /*]]>*/
+
 </script>
 </body>
 </html>

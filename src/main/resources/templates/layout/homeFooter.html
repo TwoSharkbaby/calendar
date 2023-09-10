@@ -1,167 +1,70 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <div th:fragment="homeFooter">
-        <footer class="page-footer font-small blue">
-            <div class="footer-copyright text-center py-3 border-top">
-                <p class="text-center">🐬 Created by TwoSharkbaby 🐬</p>
-                <p class="text-center">📆 2023.09</p>
+        <footer class="m-0">
+            <div class="border-top">
+                <p class="text-center mt-3">🐬 Created by TwoSharkbaby 🐬</p>
+                <p class="text-center mb-0">📆 2023.09</p>
             </div>
         </footer>
-        <script src="/js/chart.js"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cee28508c11c60f63fcefa378ba506a6&libraries=services"></script>
         <script th:inline="javascript">
-if ([[${#authorization.expression('isAnonymous()')}]]) {
-  const ctx1 = document.getElementById('myChart1');
+var mapContainer = document.getElementById('map'),
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 7
+    };
 
-  new Chart(ctx1, {
-    type: 'line',
-    data: {
-      labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-      datasets: [{
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        borderWidth: 1
-      }]
-    },
-    options: {
-        layout: {
-            padding: 10
-        },
-        plugins: {
-            title: {
-                display: true,
-                text: '월간',
-                font: {
-                    size: 20
-                }
-            },
-            legend: {
-                display: false,
-            }
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var userLatLng = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                map.setCenter(userLatLng);
+                searchGyms(userLatLng);
+            });
         }
-    }
-  });
-    const ctx2 = document.getElementById('myChart2');
 
-  new Chart(ctx2, {
-    type: 'line',
-    data: {
-      labels: ['1', '3', '5', '8', '10', '12', '15', '17', '19', '22', '24', '26', '29', '31'],
-      datasets: [{
-        data: ['1', '3', '5', '8', '10', '12', '15', '17', '19', '22', '24', '26', '29', '31'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-        layout: {
-            padding: 10
-        },
-        plugins: {
-            title: {
-                display: true,
-                text: '이전달',
-                font: {
-                    size: 20
+        function searchGyms(userLatLng) {
+            var ps = new kakao.maps.services.Places();
+
+            ps.keywordSearch('헬스장', function (data, status, pagination) {
+                if (status === kakao.maps.services.Status.OK) {
+                    displayPlaces(data);
                 }
-            },
-            legend: {
-                display: false,
-            }
+            }, {
+                location: userLatLng
+            });
         }
-    }
-  });
-}
-</script>
-<script th:inline="javascript">
-if ([[${#authorization.expression('isAuthenticated()')}]]) {
-  const ctx3 = document.getElementById('myChart3');
 
-  var recodeYearListDto = /*[[${recodeYearListDto}]]*/ null;
+        function displayPlaces(places) {
+            var placesList = document.getElementById('placesList');
+            var fragment = document.createDocumentFragment();
 
-  new Chart(ctx3, {
-    type: 'line',
-    data: {
-      labels: Object.keys(recodeYearListDto.dateAndTotalWeight),
-      datasets: [{
-        data: Object.values(recodeYearListDto.dateAndTotalWeight),
-        borderWidth: 1
-      }]
-    },
-    options: {
-        layout: {
-            padding: 10
-        },
-        plugins: {
-            title: {
-                display: true,
-                text: '올해',
-                font: {
-                    size: 20
-                }
-            },
-            legend: {
-                display: false,
+            for (var i = 0; i < places.length; i++) {
+                var place = places[i];
+                var item = document.createElement('div');
+                item.className = 'placeItem';
+                item.innerHTML = place.place_name;
+                fragment.appendChild(item);
+
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: new kakao.maps.LatLng(place.y, place.x)
+                });
+
+                kakao.maps.event.addListener(marker, 'click', (function (place) {
+                    return function () {
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: '<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>'
+                        });
+                        infowindow.open(map, marker);
+                    };
+                })(place));
             }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: '중량 ( T )',
-                    font: {
-                        size: 12,
-                        weight: 'bold'
-                    }
-                }
-            }
+
+            //placesList.appendChild(fragment);
         }
-    }
-  });
-
-  const ctx4 = document.getElementById('myChart4');
-
-  var recodeMonthListDto = /*[[${recodeMonthListDto}]]*/ null;
-
-  new Chart(ctx4, {
-    type: 'line',
-    data: {
-      labels: Object.keys(recodeMonthListDto.dateAndTotalWeight),
-      datasets: [{
-        data: Object.values(recodeMonthListDto.dateAndTotalWeight),
-        borderWidth: 1
-      }]
-    },
-    options: {
-        layout: {
-            padding: 10
-        },
-        plugins: {
-            title: {
-                display: true,
-                text: '이번 달',
-                font: {
-                    size: 20
-                }
-            },
-            legend: {
-                display: false,
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: '중량 ( KG )',
-                    font: {
-                        size: 12,
-                        weight: 'bold'
-                    }
-                }
-            }
-        }
-    }
-  });
-}
 </script>
     </div>
 </html>

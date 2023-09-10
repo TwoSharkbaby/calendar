@@ -17,6 +17,8 @@ public class RecodeController {
     @GetMapping
     public String main(Model model) {
         model.addAttribute("recode", recodeService.getRecodeAll());
+        model.addAttribute("recodeMonthListDto", recodeService.getMonthRecode());
+        model.addAttribute("recodeYearListDto", recodeService.getYearRecode());
         return "recode/home";
     }
 

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="recodeFooter">
+        <footer class="m-0">
+            <div class="border-top">
+                <p class="text-center mt-3">🐬 Created by TwoSharkbaby 🐬</p>
+                <p class="text-center mb-0">📆 2023.09</p>
+            </div>
+        </footer>
+        <script src="/js/chart.js"></script>
+        <script th:inline="javascript">
+if ([[${#authorization.expression('isAuthenticated()')}]]) {
+  const ctx3 = document.getElementById('myChart3');
+
+  var recodeYearListDto = /*[[${recodeYearListDto}]]*/ null;
+
+  new Chart(ctx3, {
+    type: 'line',
+    data: {
+      labels: Object.keys(recodeYearListDto.dateAndTotalWeight),
+      datasets: [{
+        data: Object.values(recodeYearListDto.dateAndTotalWeight),
+        borderWidth: 1
+      }]
+    },
+    options: {
+        layout: {
+            padding: 10
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: '올해',
+                font: {
+                    size: 20
+                }
+            },
+            legend: {
+                display: false,
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '중량 ( T )',
+                    font: {
+                        size: 12,
+                        weight: 'bold'
+                    }
+                }
+            }
+        }
+    }
+  });
+
+  const ctx4 = document.getElementById('myChart4');
+
+  var recodeMonthListDto = /*[[${recodeMonthListDto}]]*/ null;
+
+  new Chart(ctx4, {
+    type: 'line',
+    data: {
+      labels: Object.keys(recodeMonthListDto.dateAndTotalWeight),
+      datasets: [{
+        data: Object.values(recodeMonthListDto.dateAndTotalWeight),
+        borderWidth: 1
+      }]
+    },
+    options: {
+        layout: {
+            padding: 10
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: '이번 달',
+                font: {
+                    size: 20
+                }
+            },
+            legend: {
+                display: false,
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '중량 ( KG )',
+                    font: {
+                        size: 12,
+                        weight: 'bold'
+                    }
+                }
+            }
+        }
+    }
+  });
+}
+</script>
+    </div>
+</html>

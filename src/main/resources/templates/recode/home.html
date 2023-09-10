@@ -8,6 +8,14 @@
 <div th:replace="layout/top::header"></div>
 <div class="container mt-5" style="height:800px;">
     <div id='calendar'></div>
+    <div class="chart-container mt-5 mb-5" sec:authorize="isAuthenticated()">
+        <div class="chart-div">
+            <canvas id="myChart3"></canvas>
+        </div>
+        <div class="chart-div">
+            <canvas id="myChart4"></canvas>
+        </div>
+    </div>
     <div class="modal" id="calendarAddModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -165,7 +173,7 @@
         </div>
     </div>
 
-    <div th:replace="layout/footer::footer"></div>
+    <div th:replace="layout/recodeFooter::recodeFooter"></div>
 </div>
 </body>
 </html>
