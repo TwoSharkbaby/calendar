@@ -4,11 +4,196 @@
 <head th:replace="layout/header::userHead"></head>
 <body>
 <div th:replace="layout/top::header"></div>
-<div class="container">
-    <div>
-        <h1>운동</h1>
+<div class="container d-flex" style="height: 2340px;">
+    <div class="sidebar">
+        <ul class="pointer">
+            <li id="chest"><img th:src="@{/images/sidebar/chest.png}">가슴</li>
+            <li id="biceps"><img th:src="@{/images/sidebar/biceps.png}">이두&삼두</li>
+            <li id="back"><img th:src="@{/images/sidebar/back.png}">등</li>
+            <li id="shoulder"><img th:src="@{/images/sidebar/shoulder.png}">어깨</li>
+            <li id="legs"><img th:src="@{/images/sidebar/lower.png}">하체</li>
+            <li id="abs"><img th:src="@{/images/sidebar/abs.png}">복근</li>
+            <li id="aerobic"><img th:src="@{/images/sidebar/exercise.png}">유산소</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div id="content-chest" style="height: 300px;">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <img th:src="@{/images/sidebar/chest.png}">
+                <h2>가슴 정보</h2>
+            </div>
+            <div class="row">
+                <div class="col ms-5">
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=uimCwpTfiHE" target="_blank"><img th:src="@{/images/chest/benchPress.png}"><h4>벤치 프레스</h4></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=oqOt8Tpp7Tg" target="_blank"><img th:src="@{/images/chest/chestPress.png}"><h4>체스트 프레스</h4></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=jurRUh4C4Bs" target="_blank"><img th:src="@{/images/chest/dumbbellPress.png}"><h4>덤벨 프레스</h4></a></div>
+                </div>
+                <div class="col">
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=hGxXXyf_FOo" target="_blank"><img th:src="@{/images/chest/inclineBenchPress.png}"><h4>인클라인 벤치프레스</h4></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=mQaWB0Iv7eE" target="_blank"><img th:src="@{/images/chest/pectoralFly.png}"><h4>페트롤 플라이</h4></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=0PJ6s-AAztY" target="_blank"><img th:src="@{/images/chest/pushUp.png}"><h4>팔굽혀펴기</h4></a></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-biceps" style="height: 300px;">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <img th:src="@{/images/sidebar/biceps.png}">
+                <h2>이두 & 삼두 정보</h2>
+            </div>
+            <div class="row">
+                <div class="col ms-5">
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=cycA3RMqk_A" target="_blank"><img th:src="@{/images/equipment/babel.png}"><h4>바벨 컬</h4></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=xV4TqLLSNsE" target="_blank"><img th:src="@{/images/biceps/dumbbell curl.png}"><h4>덤밸 컬</h4></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=xV4TqLLSNsE" target="_blank"><img th:src="@{/images/biceps/dumbbell hammer curl.png}"><h4>덤밸 해머컬</h4></a></div>
+                </div>
+                <div class="col">
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=1qazL6JUYjw" target="_blank"><img th:src="@{/images/equipment/babel.png}"><h4>바벨 트라이셉 익스텐션</h4></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=tTgRgcx_4pI" target="_blank"><img th:src="@{/images/back/one arm dumbbell row.png}"><h4>원암 덤벨 킥백</h4></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=BfrIODXaDJM" target="_blank"><img th:src="@{/images/equipment/cable.png}"><h4>케이블 트라이셉 푸쉬다운</h4></a></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-back" style="height: 300px;">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <img th:src="@{/images/sidebar/back.png}">
+                <h2>등 정보</h2>
+            </div>
+            <div class="row">
+                <div class="col ms-5">
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=eI7RCKa6uYE" target="_blank"><img th:src="@{/images/back/deadlift.png}"><h4>데드리프트</h4></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=I0DPkJoz1CU" target="_blank"><img th:src="@{/images/back/pull up.png}"><h4>풀업</h4></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=pDxZIrDJM5E" target="_blank"><img th:src="@{/images/back/let pulldown.png}"><h4>랫풀다운</h4></a></div>
+                </div>
+                <div class="col">
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=G5dEeUj1aus" target="_blank"><img th:src="@{/images/back/one arm dumbbell row.png}"><h4>윈암 덤벨로우</h4></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=VZ2LqVsil50" target="_blank"><img th:src="@{/images/equipment/babel.png}"><h4>바벨로우</h4></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=pDDXNaXACTc" target="_blank"><img th:src="@{/images/equipment/cable.png}"><h4>시티드 케이블로우</h4></a></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-shoulder" style="height: 300px;">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <img th:src="@{/images/sidebar/shoulder.png}">
+                <h2>어깨 정보</h2>
+            </div>
+            <div class="row">
+                <div class="col ms-5">
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=X2b0FzZ1QkM" target="_blank"><img th:src="@{/images/shoulder/overhead press.png}"><h3>오버헤드 프레스</h3></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=bRizgl0IzoQ" target="_blank"><img th:src="@{/images/shoulder/seated overhead press.png}"><h3>시티드 오버헤드 프레스</h3></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=-x_gzFFFkuo" target="_blank"><img th:src="@{/images/shoulder/pec rear delt Fly.png}"><h3>펙 덱 리어 델트</h3></a></div>
+                </div>
+                <div class="col">
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=yNG_IiAV7WE" target="_blank"><img th:src="@{/images/equipment/dumbbell.png}"><h3>덤벨 레터럴 레이즈</h3></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=mDZZ72h3UoM" target="_blank"><img th:src="@{/images/equipment/dumbbell.png}"><h3>덤벨 프론트 레이즈</h3></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=ylMZB3dtEgs" target="_blank"><img th:src="@{/images/equipment/cable.png}"><h3>리버스 케이블 플라이</h3></a></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-legs" style="height: 300px;">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <img th:src="@{/images/sidebar/lower.png}">
+                <h2>하체 정보</h2>
+            </div>
+            <div class="row">
+                <div class="col ms-5">
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=DqcH7Rq1UMc" target="_blank"><img th:src="@{/images/lower/squat.png}"><h3>스쿼트</h3></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=PmqkX6Te540" target="_blank"><img th:src="@{/images/lower/leg press.png}"><h3>레그 프레스</h3></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=PFLgO86NIeA" target="_blank"><img th:src="@{/images/lower/lunge.png}"><h3>런지</h3></a></div>
+                </div>
+                <div class="col">
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=0InCElXJJ9E" target="_blank"><img th:src="@{/images/back/deadlift.png}"><h3>스티프 레그 데드리프트</h3></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=gny93tjBZM8" target="_blank"><img th:src="@{/images/back/deadlift.png}"><h3>스모 데드리프트</h3></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=pL9EFLzraYk" target="_blank"><img th:src="@{/images/equipment/bench.png}"><h3>불가리안 스플릿 스쿼트</h3></a></div>
+                </div>
+            </div>
+
+        </div>
+        <div id="content-abs" style="height: 300px;">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <img th:src="@{/images/sidebar/abs.png}">
+                <h2>복근 정보</h2>
+            </div>
+            <div class="row">
+                <div class="col ms-5">
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=HPc7BJG2qho" target="_blank"><img th:src="@{/images/abs/crunch.png}"><h3>크런치</h3></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=RWzRWUgPZRM" target="_blank"><img th:src="@{/images/abs/incline crunch.png}"><h3>디클라인 크런치</h3></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=4chq9fwGGLE" target="_blank"><img th:src="@{/images/abs/flank.png}"><h3>플랭크</h3></a></div>
+                </div>
+                <div class="col">
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=BMK-bF-Dth0" target="_blank"><img th:src="@{/images/abs/hanging leg raises.png}"><h3>행잉 레그레이즈</h3></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=jGaqYJMpsu8" target="_blank"><img th:src="@{/images/abs/Captain's Chair Leg Raise.png}"><h3>캡틴 체어 레그레이즈</h3></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=-iBq17im3Io" target="_blank"><img th:src="@{/images/abs/ab slide.png}"><h3>ab 슬라이드</h3></a></div>
+                </div>
+            </div>
+
+        </div>
+        <div id="content-aerobic" style="height: 300px;">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <img th:src="@{/images/sidebar/exercise.png}">
+                <h2>유산소 정보</h2>
+            </div>
+            <div class="row">
+                <div class="col ms-5">
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=956QL3pyuls" target="_blank"><img th:src="@{/images/aerobic/running.png}"><h3>러닝</h3></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=32stQrqOV4w" target="_blank"><img th:src="@{/images/aerobic/treadmill running.png}"><h3>트레드밀 러닝</h3></a></div>
+                    <div class="ms-3"><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/shorts/d8Jm_6TZxL0" target="_blank"><img th:src="@{/images/aerobic/treadmill running.png}"><h3>인클라인 트레드밀 러닝</h3></a></div>
+                </div>
+                <div class="col">
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=weOd8r9JHdU" target="_blank"><img th:src="@{/images/aerobic/cycle.png}"><h3>사이클</h3></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=4leACgpgUTI" target="_blank"><img th:src="@{/images/aerobic/burpee.png}"><h3>버피</h3></a></div>
+                    <div><a class="d-flex justify-content-start align-items-center" href="https://www.youtube.com/watch?v=wQmzhwgK_AM" target="_blank"><img th:src="@{/images/aerobic/rowing machine.png}"><h3>로잉 머신</h3></a></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div th:replace="layout/footer::footer"></div>
+<script th:inline="javascript">
+    document.getElementById("chest").addEventListener("click", function() {
+        var element = document.getElementById("content-chest");
+        var offset = element.getBoundingClientRect().top - (window.innerHeight / 2);
+        window.scrollBy({ top: offset, behavior: "smooth" });
+    });
+
+    document.getElementById("biceps").addEventListener("click", function() {
+        var element = document.getElementById("content-biceps");
+        var offset = element.getBoundingClientRect().top - (window.innerHeight / 2) + 200;
+        window.scrollBy({ top: offset, behavior: "smooth" });
+    });
+
+    document.getElementById("back").addEventListener("click", function() {
+        var element = document.getElementById("content-back");
+        var offset = element.getBoundingClientRect().top - (window.innerHeight / 2) + 200;
+        window.scrollBy({ top: offset, behavior: "smooth" });
+    });
+
+    document.getElementById("shoulder").addEventListener("click", function() {
+        var element = document.getElementById("content-shoulder");
+        var offset = element.getBoundingClientRect().top - (window.innerHeight / 2) + 200;
+        window.scrollBy({ top: offset, behavior: "smooth" });
+    });
+
+    document.getElementById("legs").addEventListener("click", function() {
+        var element = document.getElementById("content-legs");
+        var offset = element.getBoundingClientRect().top - (window.innerHeight / 2) + 200;
+        window.scrollBy({ top: offset, behavior: "smooth" });
+    });
+
+    document.getElementById("abs").addEventListener("click", function() {
+        var element = document.getElementById("content-abs");
+        var offset = element.getBoundingClientRect().top - (window.innerHeight / 2) + 200;
+        window.scrollBy({ top: offset, behavior: "smooth" });
+    });
+
+    document.getElementById("aerobic").addEventListener("click", function() {
+        var element = document.getElementById("content-aerobic");
+        var offset = element.getBoundingClientRect().top - (window.innerHeight / 2) + 200;
+        window.scrollBy({ top: offset, behavior: "smooth" });
+    });
+</script>
 </body>
 </html>

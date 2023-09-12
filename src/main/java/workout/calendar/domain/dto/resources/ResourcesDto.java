@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import workout.calendar.domain.RoleType;
 import workout.calendar.domain.entity.Resources;
+import workout.calendar.domain.entity.User;
 
 import javax.validation.constraints.NotEmpty;
 

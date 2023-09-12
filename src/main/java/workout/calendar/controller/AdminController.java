@@ -64,7 +64,6 @@ public class AdminController {
         return "redirect:/admin/accounts";
     }
 
-    // 반환값 DTO로 수정 필요
     @GetMapping(value = "/resources")
     public String resourcesList(@PageableDefault(size = 10) Pageable pageable, Model model) {
         model.addAttribute("resources", resourceService.getResourcesWithPage(pageable));
