@@ -3,7 +3,6 @@ package workout.calendar.domain.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import workout.calendar.domain.dto.performance.PerformanceDto;
 import workout.calendar.domain.dto.recode.RecodeModifyFormDto;
 import workout.calendar.domain.dto.recode.RecodeResisterFormDto;
 
@@ -16,6 +15,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 @ToString
+@Table(name = "recode")
 public class Recode extends BaseTimeEntity{
 
     @Id

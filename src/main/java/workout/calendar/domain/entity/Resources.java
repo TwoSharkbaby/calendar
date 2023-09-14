@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "resources")
 public class Resources extends BaseEntity {
 
     @Id

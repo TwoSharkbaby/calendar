@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @ToString
+@Table(name = "performance")
 public class Performance {
 
     @Id
