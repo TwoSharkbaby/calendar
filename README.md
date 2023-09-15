@@ -17,6 +17,8 @@
 <img src="https://img.shields.io/badge/Springsecurity-6DB33F?style=flat&logo=Springsecurity&logoColor=white" />
 <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white" />       
 <img src="https://img.shields.io/badge/Jquery-0769AD?style=flat&logo=Jquery&logoColor=white" />
+<img src="https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=Chart.js&logoColor=white" />
+<img src="https://img.shields.io/badge/Fullcalendar-0769AD?style=flat&logo=Fullcalendar&logoColor=white" />
 <img src="https://img.shields.io/badge/KakaoTalk-FFCD00?style=flat&logo=KakaoTalk&logoColor=white" />
 <img src="https://img.shields.io/badge/Naver-03C75A?style=flat&logo=Naver&logoColor=white" />
 <img src="https://img.shields.io/badge/Google-4285F4?style=flat&logo=Google&logoColor=white" />
@@ -26,7 +28,7 @@
 
 <div>
 <img src="https://img.shields.io/badge/Visualstudiocode-007ACC?style=flat&logo=Visualstudiocode&logoColor=white" />  
-<img src="https://img.shields.io/badge/Eclipseide-2C2255?style=flat&logo=Eclipseide&logoColor=white" />
+<img src="https://img.shields.io/badge/Intellijidea-000000?style=flat&logo=Intellijidea&logoColor=white" />
 </div>
 
 :computer: Distribution
@@ -37,6 +39,8 @@
 <img src="https://img.shields.io/badge/Amazonec2-FF9900?style=flat&logo=Amazonec2&logoColor=white" />
 <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=Ubuntu&logoColor=white" />
 <img src="https://img.shields.io/badge/Mysql-4479A1?style=flat&logo=Mysql&logoColor=white" />
+<img src="https://img.shields.io/badge/Amazonroute53-8C4FFF?style=flat&logo=Amazonroute53&logoColor=white" />
+<img src="https://img.shields.io/badge/AmazonCertificateManager-4479A1?style=flat&logo=AmazoncertificateManager&logoColor=white" />
 </div>
 
 :books: Software Configuration Management
@@ -50,10 +54,10 @@
 
 <div>
 <img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=Postman&logoColor=white" />
-<img src="https://img.shields.io/badge/Sentry-362D59?style=flat&logo=Sentry&logoColor=white" />
-<img src="https://img.shields.io/badge/prometheus-E6522C?style=flat&logo=Prometheus&logoColor=white" />
 </div>
 
 ### 내용
 
-나중에 작성
+운동 기록과 관련된 웹서비스로 사용자들이 운동 기록을
+남기고 관리할 수 있는 플랫폼입니다.
+운동 활동을 추적하고 시각적으로 표현할 수 있는 강력한 도구와 각종 운동 기술과 정보를 얻을 수 있습니다

@@ -18,6 +18,7 @@ public class Resources extends BaseEntity {
     @Column(name = "resource_id")
     private Long id;
 
+    @Column(nullable = false)
     private String urlName;
 
     @Column(nullable = false, length = 12)

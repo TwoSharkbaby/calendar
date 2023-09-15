@@ -26,7 +26,7 @@ public class Recode extends BaseTimeEntity{
     @Column(nullable = false, length = 10)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     private String date;
 
     @ManyToOne(fetch = FetchType.LAZY)
